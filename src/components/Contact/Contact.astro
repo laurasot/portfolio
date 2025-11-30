@@ -1,0 +1,53 @@
+---
+import styles from './Contact.module.css';
+---
+
+<section class={styles.contactContainer} id="contacto">
+    <div class={styles.grainTexture} />
+    <div class={styles.contactContent}>
+        <h2 class={styles.sectionTitle}>Conectemos</h2>
+        <p class={styles.sectionSubtitle}>
+        Aquí te dejo mis redes por si buscas colaboración en un proyecto, 
+        necesitas apoyo creativo/tecnológico o simplemente quieres conversar sobre innovación.
+        </p>
+
+        <div class={styles.contactLinks}>
+            <a
+                href="mailto:laura5florencia@gmail.com"
+                class={styles.contactLink}
+                aria-label="Enviar email"
+            >
+                <span class={styles.contactLabel}>EMAIL</span>
+            </a>
+
+            <a
+                href="https://www.linkedin.com/in/laurasot/"
+                class={styles.contactLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+            >
+                <span class={styles.contactLabel}>LINKEDIN</span>
+            </a>
+
+            <a
+                href="https://github.com/laurasot"
+                class={styles.contactLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+            >
+                <span class={styles.contactLabel}>GITHUB</span>
+            </a>
+        </div>
+
+        <footer class={styles.footer}>
+            <p class={styles.footerText}>
+                Diseñado y desarrollado con precisión y creatividad
+            </p>
+            <p class={styles.footerSignature}>Laura Soto</p>
+            <p class={styles.footerAlias}>alias Popositas</p>
+        </footer>
+    </div>
+</section>
+

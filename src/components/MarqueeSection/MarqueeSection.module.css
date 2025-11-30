@@ -18,6 +18,7 @@
     display: flex;
     width: fit-content;
     animation: marqueeScroll 40s linear infinite;
+    will-change: transform;
 }
 
 .marqueeText {

@@ -1,0 +1,51 @@
+---
+import styles from './HeroBanner.module.css';
+---
+
+<section class={styles.heroContainer}>
+    <div class={styles.concreteTexture} />
+
+    <div class={styles.geometricBlocks}>
+        <div class={styles.accentBar} data-color="red" data-position="top" />
+        <div class={styles.accentBar} data-color="yellow" data-position="middle" />
+        <div class={styles.accentBar} data-color="red" data-position="bottom" />
+        <div class={styles.solidBlock} data-position="hero" />
+    </div>
+
+    <div class={styles.contentLayer}>
+        <div class={styles.textContent}>
+            <div class={styles.labelSmall}>PORTFOLIO 2025</div>
+            <h1 class={styles.name}>LAURA</h1>
+
+            <div class={styles.taglineBlock}>
+                <div class={styles.taglineLine} />
+                <p class={styles.tagline}>
+                    MÚSICA × TECNOLOGÍA
+                </p>
+            </div>
+
+            <div class={styles.rolesContainer}>
+                <div class={styles.roleBlock}>
+                    <span class={styles.roleNumber}>01</span>
+                    <span class={styles.roleText}>FULL STACK<br />DEVELOPER</span>
+                </div>
+                <div class={styles.roleBlock}>
+                    <span class={styles.roleNumber}>02</span>
+                    <span class={styles.roleText}>AI<br />ENGINEER</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class={styles.cornerDetails}>
+        <div class={styles.cornerTopLeft}>
+            <div class={styles.cornerLine} />
+            <div class={styles.cornerLine} />
+        </div>
+        <div class={styles.cornerBottomRight}>
+            <div class={styles.cornerLine} />
+            <div class={styles.cornerLine} />
+        </div>
+    </div>
+</section>
+

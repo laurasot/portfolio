@@ -49,12 +49,6 @@
   --color-white-warm: #fdfbf7;
 
   /* ========================================
-     COLORES DE TEXTO
-     ======================================== */
-  --color-text-primary: var(--color-black);
-  --color-text-secondary: var(--color-gray-dark);
-
-  /* ========================================
      GRADIENTES
      ======================================== */
   --gradient-desert-sky: linear-gradient(180deg,
@@ -129,7 +123,6 @@
   --border-medium: 4px;
   --border-thick: 6px;
   --border-heavy: 8px;
-  --border-radius-sm: 4px;
 
   /* ========================================
      TRANSICIONES

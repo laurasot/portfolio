@@ -1,0 +1,128 @@
+# Reglas del proyecto para una aplicación React con TypeScript
+
+## 1. Estructura del proyecto
+- `src/` – Todo el código fuente.
+  - `components/` – Componentes UI reutilizables escritos en **.tsx**.
+  - `pages/` – Componentes a nivel de página (para usar con React Router), también **.tsx**.
+  - `hooks/` – Hooks personalizados de React en **.ts**.
+  - `utils/` – Funciones auxiliares y utilidades en **.ts**.
+  - `styles/` – CSS/SCSS global y tokens de diseño.
+  - `assets/` – Imágenes, fuentes, íconos.
+- `public/` – Archivos estáticos (favicon, manifest, etc.).
+- `tests/` – Pruebas unitarias e integradas, replicando la estructura de `src/`.
+
+## 2. Convenciones de nombres
+- **Archivos:** `PascalCase` para componentes (`MiBoton.tsx`), `camelCase` para utilidades y hooks (`formatearFecha.ts`, `useObtenerDatos.ts`).
+- **Componentes:** Usar `PascalCase` y exportarlos como default.
+- **Hooks:** Prefijo `use` (ej. `useObtenerDatos`).
+- **CSS/SCSS:** Nomenclatura tipo BEM o CSS Modules con nombres de clase en `camelCase`.
+- **Tipos:** Definir interfaces y tipos en archivos `.ts` o junto al componente (`MiBoton.types.ts`).
+
+## 3. Buenas prácticas de codificación
+- Aplicar **ESLint** con la configuración `eslint-config-airbnb-typescript` y el plugin `@typescript-eslint`.
+- Formatear con **Prettier** (indentación de 2 espacios, comillas simples).
+- Preferir componentes funcionales y **React Hooks** sobre clases.
+- **Tipado estricto:** habilitar `strict` en `tsconfig.json`, usar tipos explícitos para props, estado y retornos de funciones.
+- Seguir los **principios SOLID**:
+  - **S**ingle Responsibility: Cada componente o módulo debe tener una única responsabilidad.
+  - **O**pen/Closed: Los módulos deben estar abiertos a extensión pero cerrados a modificación.
+  - **L**iskov Substitution: Los componentes deben poder sustituirse sin romper el comportamiento.
+  - **I**nterface Segregation: Definir interfaces pequeñas y específicas para props y contextos.
+  - **D**ependency Inversion: Dependencias invertidas mediante inyección de dependencias (p. ej., pasando servicios como props o usando contextos).
+- Utilizar **patrones de diseño** comunes en React:
+  - **Container‑Presenter** para separar lógica de presentación.
+  - **Higher‑Order Components** o **Render Props** cuando sea necesario reutilizar lógica.
+  - **Compound Components** para componentes que trabajan juntos.
+- Evitar el *prop‑drilling* profundo; usar Context API o una solución de gestión de estado cuando corresponda.
+
+## 4. Gestión del estado
+- Estado local: `useState` / `useReducer` con tipado explícito.
+- Estado global: **React Context** para casos simples, **Redux Toolkit** (con `@reduxjs/toolkit` y tipado) para estados complejos.
+- Mantener los efectos secundarios en `useEffect` o hooks personalizados tipados.
+
+
+
+## 7. Accesibilidad y SEO
+- Usar elementos HTML semánticos.
+- Garantizar que todos los elementos interactivos sean accesibles con teclado.
+- Añadir atributos `aria-` cuando sea necesario.
+- Proveer texto `alt` descriptivo para imágenes.
+- Gestionar meta‑etiquetas con `react-helmet` para SEO.
+
+## 8. Rendimiento y escalabilidad
+- **Code‑splitting** con `React.lazy` y `Suspense`.
+- Optimizar imágenes (formato WebP, tamaños adecuados).
+- Aplicar memoización (`React.memo`, `useMemo`, `useCallback`) donde sea beneficioso.
+- Evitar renders innecesarios.
+- Diseñar la arquitectura pensando en la escalabilidad: módulos independientes, pruebas exhaustivas y documentación clara.
+# Reglas del proyecto para una aplicación React con TypeScript
+
+## 1. Estructura del proyecto
+- `src/` – Todo el código fuente.
+  - `components/` – Componentes UI reutilizables escritos en **.tsx**.
+  - `pages/` – Componentes a nivel de página (para usar con React Router), también **.tsx**.
+  - `hooks/` – Hooks personalizados de React en **.ts**.
+  - `utils/` – Funciones auxiliares y utilidades en **.ts**.
+  - `styles/` – CSS/SCSS global y tokens de diseño.
+  - `assets/` – Imágenes, fuentes, íconos.
+- `public/` – Archivos estáticos (favicon, manifest, etc.).
+- `tests/` – Pruebas unitarias e integradas, replicando la estructura de `src/`.
+
+## 2. Convenciones de nombres
+- **Archivos:** `PascalCase` para componentes (`MiBoton.tsx`), `camelCase` para utilidades y hooks (`formatearFecha.ts`, `useObtenerDatos.ts`).
+- **Componentes:** Usar `PascalCase` y exportarlos como default.
+- **Hooks:** Prefijo `use` (ej. `useObtenerDatos`).
+- **CSS/SCSS:** Nomenclatura tipo BEM o CSS Modules con nombres de clase en `camelCase`.
+- **Tipos:** Definir interfaces y tipos en archivos `.ts` o junto al componente (`MiBoton.types.ts`).
+
+## 3. Buenas prácticas de codificación
+- Aplicar **ESLint** con la configuración `eslint-config-airbnb-typescript` y el plugin `@typescript-eslint`.
+- Formatear con **Prettier** (indentación de 2 espacios, comillas simples).
+- Preferir componentes funcionales y **React Hooks** sobre clases.
+- **Tipado estricto:** habilitar `strict` en `tsconfig.json`, usar tipos explícitos para props, estado y retornos de funciones.
+- Seguir los **principios SOLID**:
+  - **S**ingle Responsibility: Cada componente o módulo debe tener una única responsabilidad.
+  - **O**pen/Closed: Los módulos deben estar abiertos a extensión pero cerrados a modificación.
+  - **L**iskov Substitution: Los componentes deben poder sustituirse sin romper el comportamiento.
+  - **I**nterface Segregation: Definir interfaces pequeñas y específicas para props y contextos.
+  - **D**ependency Inversion: Dependencias invertidas mediante inyección de dependencias (p. ej., pasando servicios como props o usando contextos).
+- Utilizar **patrones de diseño** comunes en React:
+  - **Container‑Presenter** para separar lógica de presentación.
+  - **Higher‑Order Components** o **Render Props** cuando sea necesario reutilizar lógica.
+  - **Compound Components** para componentes que trabajan juntos.
+- Evitar el *prop‑drilling* profundo; usar Context API o una solución de gestión de estado cuando corresponda.
+
+## 4. Gestión del estado
+- Estado local: `useState` / `useReducer` con tipado explícito.
+- Estado global: **React Context** para casos simples, **Redux Toolkit** (con `@reduxjs/toolkit` y tipado) para estados complejos.
+- Mantener los efectos secundarios en `useEffect` o hooks personalizados tipados.
+
+
+
+## 7. Accesibilidad y SEO
+- Usar elementos HTML semánticos.
+- Garantizar que todos los elementos interactivos sean accesibles con teclado.
+- Añadir atributos `aria-` cuando sea necesario.
+- Proveer texto `alt` descriptivo para imágenes.
+- Gestionar meta‑etiquetas con `react-helmet` para SEO.
+
+## 8. Rendimiento y escalabilidad
+- **Code‑splitting** con `React.lazy` y `Suspense`.
+- Optimizar imágenes (formato WebP, tamaños adecuados).
+- Aplicar memoización (`React.memo`, `useMemo`, `useCallback`) donde sea beneficioso.
+- Evitar renders innecesarios.
+- Diseñar la arquitectura pensando en la escalabilidad: módulos independientes, pruebas exhaustivas y documentación clara.
+
+## 9. Despliegue
+- Compilar con `npm run build` (o `yarn build`).
+- Desplegar los assets estáticos en un CDN o servicio de hosting (Vercel, Netlify, etc.).
+- Las variables de entorno deben comenzar con `REACT_APP_`.
+
+## 10. Reglas de código
+- **Sin comentarios**: El código debe ser auto‑explicativo; los nombres de variables, funciones y componentes deben ser lo suficientemente descriptivos para no necesitar comentarios.
+- **Prohibido usar emojis** en el código, documentación o nombres de archivos.
+- **Eliminar código no utilizado**: Mantener el repositorio limpio; cualquier código que no se use debe ser removido.
+- **Funciones reutilizables**: Extraer lógica repetitiva a funciones o hooks reutilizables para evitar duplicación.
+
+---
+*Este documento es vivo; actualízalo a medida que el proyecto evolucione.*
