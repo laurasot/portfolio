@@ -1,0 +1,158 @@
+:root {
+  /* ========================================
+     PALETA BRUTALISTA - COLORES PRIMARIOS
+     ======================================== */
+  
+  /* Negros */
+  --color-black: #000000;
+  --color-black-soft: #1a1a1a;
+  --color-black-medium: #333333;
+  
+  /* Grises */
+  --color-gray-dark: #4a4a4a;
+  --color-gray-medium: #6d6d6d;
+  --color-gray-light: #e5e5e5;
+  
+  /* Claros */
+  --color-cream: #d4d2ce;
+  --color-white: #ffffff;
+  
+  /* Acento */
+  --color-accent: #C41E3A;
+
+  /* ========================================
+     COLORES LEGACY (mantener compatibilidad)
+     ======================================== */
+  --color-soviet-red: var(--color-accent);
+  --color-industrial-yellow: #FFC107;
+  --color-brutalist-black: var(--color-black-soft);
+  --color-steel-gray: var(--color-gray-medium);
+
+  /* ========================================
+     COLORES DECORATIVOS (Hero, etc)
+     ======================================== */
+  --color-turquoise-deep: #2a9d8f;
+  --color-turquoise-bright: #4ecdc4;
+  --color-turquoise-soft: #7dd3c0;
+  --color-coral: #ff9b7a;
+  --color-coral-soft: #ffb4a2;
+  --color-lilac-vibrant: #b19cd9;
+  --color-lilac-medium: #c9a9d1;
+  --color-lilac-soft: #e8c4d8;
+  --color-purple-deep: #5b4a8f;
+  --color-purple-medium: #8b7ab8;
+  --color-sand-warm: #f4e4c1;
+  --color-sand-medium: #d4c5a9;
+  --color-sky-deep: #4a7c9e;
+  --color-sky-medium: #6ba3c3;
+  --color-sky-soft: #a8d5e2;
+  --color-white-warm: #fdfbf7;
+
+  /* ========================================
+     GRADIENTES
+     ======================================== */
+  --gradient-desert-sky: linear-gradient(180deg,
+      #4a7c9e 0%,
+      #6ba3c3 25%,
+      #a8d5e2 50%,
+      #e8c4d8 75%,
+      #f4e4c1 100%);
+
+  --gradient-twilight: linear-gradient(135deg,
+      #5b4a8f 0%,
+      #8b7ab8 30%,
+      #c9a9d1 60%,
+      #e8c4d8 100%);
+
+  --gradient-text-vibrant: linear-gradient(135deg,
+      #4ecdc4,
+      #b19cd9,
+      #ff9b7a);
+
+  /* ========================================
+     OVERLAYS
+     ======================================== */
+  --overlay-particles: rgba(255, 255, 255, 0.05);
+  --overlay-gradient: rgba(107, 163, 195, 0.1);
+  --overlay-glow: rgba(78, 205, 196, 0.15);
+
+  /* ========================================
+     TIPOGRAFÍA
+     ======================================== */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Syne', 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-accent: 'Space Grotesk', 'Inter', sans-serif;
+
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-black: 900;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+  --font-size-6xl: 3.75rem;
+  --font-size-7xl: 4.5rem;
+
+  /* ========================================
+     ESPACIADO
+     ======================================== */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+  --spacing-4xl: 6rem;
+  --spacing-5xl: 8rem;
+  --spacing-6xl: 12rem;
+
+  /* ========================================
+     BORDES
+     ======================================== */
+  --border-thin: 2px;
+  --border-medium: 4px;
+  --border-thick: 6px;
+  --border-heavy: 8px;
+
+  /* ========================================
+     TRANSICIONES
+     ======================================== */
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  --easing-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --float-gentle: 6s ease-in-out infinite;
+
+  /* ========================================
+     SOMBRAS BRUTALISTAS (sin blur)
+     ======================================== */
+  --shadow-sm: 4px 4px 0 var(--color-black);
+  --shadow-md: 8px 8px 0 var(--color-black);
+  --shadow-lg: 12px 12px 0 var(--color-black);
+  --shadow-xl: 16px 16px 0 var(--color-black);
+
+  /* ========================================
+     LAYOUT
+     ======================================== */
+  --line-height-tight: 1.1;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  --max-width-sm: 640px;
+  --max-width-md: 768px;
+  --max-width-lg: 1024px;
+  --max-width-xl: 1280px;
+  --max-width-2xl: 1400px;
+}
