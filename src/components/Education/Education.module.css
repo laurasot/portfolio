@@ -600,6 +600,29 @@
     .educationTags {
         margin-top: var(--spacing-sm);
     }
+
+    /* Ajustar tamaño de etiquetas en móvil para que coincidan con About */
+    .educationCard[data-type="Educación"] .educationTag {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.6875rem;
+    }
+
+    .educationCard[data-type="Certificación"] .educationTag {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.6875rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .educationCard[data-type="Educación"] .educationTag {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.625rem;
+    }
+
+    .educationCard[data-type="Certificación"] .educationTag {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.625rem;
+    }
 }
 
 

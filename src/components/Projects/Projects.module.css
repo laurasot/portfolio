@@ -529,7 +529,7 @@
 
     .projectTag {
         font-size: 0.625rem;
-        padding: var(--spacing-2xs) var(--spacing-xs);
+        padding: var(--spacing-xs) var(--spacing-sm);
     }
 
     .projectLink {
