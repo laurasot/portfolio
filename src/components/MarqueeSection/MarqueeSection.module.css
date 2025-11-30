@@ -50,8 +50,30 @@
 
 @media (max-width: 768px) {
     .marqueeContainer {
-        padding: var(--spacing-3xl) 0;
-        border-top: 5px solid var(--color-black);
-        border-bottom: 5px solid var(--color-black);
+        padding: var(--spacing-2xl) 0;
+        border-top: var(--border-medium) solid var(--color-black);
+        border-bottom: var(--border-medium) solid var(--color-black);
+    }
+
+    .marqueeText {
+        font-size: clamp(1.75rem, 9vw, 3.5rem);
+        padding-right: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .marqueeContainer {
+        padding: var(--spacing-xl) 0;
+        border-top: var(--border-thin) solid var(--color-black);
+        border-bottom: var(--border-thin) solid var(--color-black);
+    }
+
+    .marqueeText {
+        font-size: clamp(1.25rem, 11vw, 2.5rem);
+        padding-right: 2rem;
+    }
+
+    .marqueeTrack {
+        animation-duration: 30s;
     }
 }

@@ -1,132 +1,200 @@
----
-alwaysApply: true
----
+# Reglas del Proyecto - Astro con TypeScript
 
-# Reglas del proyecto para una aplicación React con TypeScript
+## 1. Estructura del Proyecto
 
-## 1. Estructura del proyecto
-- `src/` – Todo el código fuente.
-  - `components/` – Componentes UI reutilizables escritos en **.tsx**.
-  - `pages/` – Componentes a nivel de página (para usar con React Router), también **.tsx**.
-  - `hooks/` – Hooks personalizados de React en **.ts**.
-  - `utils/` – Funciones auxiliares y utilidades en **.ts**.
-  - `styles/` – CSS/SCSS global y tokens de diseño.
-  - `assets/` – Imágenes, fuentes, íconos.
-- `public/` – Archivos estáticos (favicon, manifest, etc.).
-- `tests/` – Pruebas unitarias e integradas, replicando la estructura de `src/`.
+```
+src/
+├── pages/          # Páginas de Astro (.astro, .md, .mdx) - definen rutas basadas en archivos
+├── components/     # Componentes reutilizables
+│   ├── *.astro    # Componentes Astro
+│   └── react/     # Componentes de framework opcionales (si se usan islas de UI)
+├── layouts/        # Layouts compartidos (.astro) para páginas
+├── hooks/          # Hooks de framework (React) y utilidades reactivas (.ts/.tsx)
+├── utils/          # Funciones auxiliares y utilidades (.ts)
+├── styles/         # CSS global, utilidades, variables y tokens de diseño
+│   ├── global.css
+│   └── tokens.css
+├── content/        # Colecciones de contenido (Astro Content Collections) si se usan
+└── assets/         # Imágenes, fuentes, íconos, SVG, etc.
 
-## 2. Convenciones de nombres
-- **Archivos:** `PascalCase` para componentes (`MiBoton.tsx`), `camelCase` para utilidades y hooks (`formatearFecha.ts`, `useObtenerDatos.ts`).
-- **Componentes:** Usar `PascalCase` y exportarlos como default.
-- **Hooks:** Prefijo `use` (ej. `useObtenerDatos`).
-- **CSS/SCSS:** Nomenclatura tipo BEM o CSS Modules con nombres de clase en `camelCase`.
-- **Tipos:** Definir interfaces y tipos en archivos `.ts` o junto al componente (`MiBoton.types.ts`).
+public/             # Archivos estáticos servidos tal cual (favicon, manifest, robots.txt)
+tests/              # Pruebas unitarias e integradas, replicando la estructura de src/
+```
 
-## 3. Buenas prácticas de codificación
-- Aplicar **ESLint** con la configuración `eslint-config-airbnb-typescript` y el plugin `@typescript-eslint`.
-- Formatear con **Prettier** (indentación de 2 espacios, comillas simples).
-- Preferir componentes funcionales y **React Hooks** sobre clases.
-- **Tipado estricto:** habilitar `strict` en `tsconfig.json`, usar tipos explícitos para props, estado y retornos de funciones.
-- Seguir los **principios SOLID**:
-  - **S**ingle Responsibility: Cada componente o módulo debe tener una única responsabilidad.
-  - **O**pen/Closed: Los módulos deben estar abiertos a extensión pero cerrados a modificación.
-  - **L**iskov Substitution: Los componentes deben poder sustituirse sin romper el comportamiento.
-  - **I**nterface Segregation: Definir interfaces pequeñas y específicas para props y contextos.
-  - **D**ependency Inversion: Dependencias invertidas mediante inyección de dependencias (p. ej., pasando servicios como props o usando contextos).
-- Utilizar **patrones de diseño** comunes en React:
-  - **Container‑Presenter** para separar lógica de presentación.
-  - **Higher‑Order Components** o **Render Props** cuando sea necesario reutilizar lógica.
-  - **Compound Components** para componentes que trabajan juntos.
-- Evitar el *prop‑drilling* profundo; usar Context API o una solución de gestión de estado cuando corresponda.
+## 2. Convenciones de Nombres
 
-## 4. Gestión del estado
-- Estado local: `useState` / `useReducer` con tipado explícito.
-- Estado global: **React Context** para casos simples, **Redux Toolkit** (con `@reduxjs/toolkit` y tipado) para estados complejos.
-- Mantener los efectos secundarios en `useEffect` o hooks personalizados tipados.
+- **Componentes Astro**: PascalCase (`MiComponente.astro`)
+- **Componentes de framework**: PascalCase (`MiBoton.tsx`)
+- **Utilidades y hooks**: camelCase (`formatearFecha.ts`, `useObtenerDatos.ts`)
+- **Layouts**: PascalCase (`BaseLayout.astro`)
+- **CSS/SCSS**: BEM o CSS Modules con nombres en camelCase (`cardContainer`, `buttonPrimary`)
+- **Tipos**: 
+  - Definir interfaces y tipos en `.ts` o junto al componente (`MiComponente.types.ts`)
+  - Tipos compartidos en carpeta `types/` si crece la base de tipos
 
+## 3. Buenas Prácticas de Codificación
 
+### TypeScript
+
+- Usar TypeScript en:
+  - Archivos `.ts` para lógica y utilidades
+  - Archivos `.tsx` para componentes de framework (React, etc.)
+  - Tipado en el frontmatter de archivos `.astro` cuando aplique
+- Tipado estricto:
+  - `strict: true` en `tsconfig.json`
+  - Tipos explícitos para funciones, props de componentes e interfaces de datos
+
+### Linting y Formateo
+
+- **ESLint** con soporte para Astro y TypeScript:
+  - `eslint-plugin-astro` para archivos `.astro`
+  - `@typescript-eslint` para reglas específicas de TS
+- **Prettier**:
+  - Indentación de 2 espacios
+  - Comillas simples
+  - Integrado con `.astro`, `.ts`, `.tsx`, `.css`
+
+### Principios SOLID
+
+- **Single Responsibility**: cada módulo hace una sola cosa
+- **Open/Closed**: extender sin modificar código existente
+- **Liskov Substitution**: tipos derivados deben ser reemplazables sin romper la lógica
+- **Interface Segregation**: interfaces pequeñas y específicas
+- **Dependency Inversion**: la lógica de negocio no debe depender de detalles de infraestructura
+
+### Componentes
+
+- Preferir componentes simples y puros
+- Lógica mínima en las páginas; extraer lógica a utilidades o componentes
+- Mantener las páginas como composición de layouts + componentes
+- Mantener el frontmatter de Astro limpio:
+  - Importaciones ordenadas
+  - Tipos de props bien definidos cuando se pasan datos a layouts o componentes
+
+## 4. Patrones y Organización
+
+### Separación de Responsabilidades
+
+- **Páginas** (`src/pages`): estructura, rutas y composición de componentes
+- **Componentes** (`src/components`): UI y lógica mínima asociada
+- **Utilidades** (`src/utils`): lógica de negocio y funciones puras
+
+### Islas de UI (Framework Components)
+
+- Usar carpeta `src/components/react/` (o equivalente) para aislar esa tecnología
+- Usar directivas de cliente de Astro de forma explícita y justificada:
+  - `client:load` - carga inmediata
+  - `client:idle` - carga cuando el navegador está inactivo
+  - `client:visible` - carga cuando es visible
+  - `client:only` - solo en cliente (evitar SSR)
+
+### Evitar Duplicación
+
+- Extraer lógica repetida a funciones reutilizables (`utils/`) o hooks (si se usa framework)
+
+## 5. Gestión del Estado
+
+### Estado Local (en islas de UI)
+
+- En React: `useState`, `useReducer` con tipos explícitos
+- En otros frameworks: usar sus mecanismos equivalentes correctamente tipados
+
+### Estado Global
+
+- Usar Context de React u otra solución solo dentro de las islas cuando realmente se requiera
+- Para estados complejos, evaluar librerías como Redux Toolkit, Zustand, Jotai, etc., siempre encapsulados en las islas de UI
+
+### Llamadas a APIs / Datos
+
+- Preferir `getStaticPaths` y colecciones de contenido de Astro cuando se pueda resolver en build
+- Dejar las llamadas dinámicas al cliente solo para casos necesarios (dashboards en tiempo real, formularios avanzados, etc.)
+
+## 6. Estilos y Diseño
+
+- Usar estilos globales mínimos (`styles/global.css`) y preferir:
+  - CSS Modules
+  - Tailwind CSS (si está integrado)
+  - Utilidades propias de diseño (tokens, variables CSS)
+- Mantener una escala de diseño consistente:
+  - Paleta de colores, tipografía, espaciados, bordes, sombras, etc. definidos como tokens
+- Evitar CSS inline innecesario en los componentes Astro
 
 ## 7. Accesibilidad y SEO
-- Usar elementos HTML semánticos.
-- Garantizar que todos los elementos interactivos sean accesibles con teclado.
-- Añadir atributos `aria-` cuando sea necesario.
-- Proveer texto `alt` descriptivo para imágenes.
-- Gestionar meta‑etiquetas con `react-helmet` para SEO.
 
-## 8. Rendimiento y escalabilidad
-- **Code‑splitting** con `React.lazy` y `Suspense`.
-- Optimizar imágenes (formato WebP, tamaños adecuados).
-- Aplicar memoización (`React.memo`, `useMemo`, `useCallback`) donde sea beneficioso.
-- Evitar renders innecesarios.
-- Diseñar la arquitectura pensando en la escalabilidad: módulos independientes, pruebas exhaustivas y documentación clara.
-# Reglas del proyecto para una aplicación React con TypeScript
+### Accesibilidad
 
-## 1. Estructura del proyecto
-- `src/` – Todo el código fuente.
-  - `components/` – Componentes UI reutilizables escritos en **.tsx**.
-  - `pages/` – Componentes a nivel de página (para usar con React Router), también **.tsx**.
-  - `hooks/` – Hooks personalizados de React en **.ts**.
-  - `utils/` – Funciones auxiliares y utilidades en **.ts**.
-  - `styles/` – CSS/SCSS global y tokens de diseño.
-  - `assets/` – Imágenes, fuentes, íconos.
-- `public/` – Archivos estáticos (favicon, manifest, etc.).
-- `tests/` – Pruebas unitarias e integradas, replicando la estructura de `src/`.
+- Usar HTML semántico: `header`, `main`, `section`, `nav`, `footer`, etc.
+- Asegurar accesibilidad de teclado: todos los elementos interactivos deben ser alcanzables y usables con teclado
+- Usar atributos `aria-*` solo cuando sean necesarios y con sentido
+- Proveer `alt` descriptivo en las imágenes
 
-## 2. Convenciones de nombres
-- **Archivos:** `PascalCase` para componentes (`MiBoton.tsx`), `camelCase` para utilidades y hooks (`formatearFecha.ts`, `useObtenerDatos.ts`).
-- **Componentes:** Usar `PascalCase` y exportarlos como default.
-- **Hooks:** Prefijo `use` (ej. `useObtenerDatos`).
-- **CSS/SCSS:** Nomenclatura tipo BEM o CSS Modules con nombres de clase en `camelCase`.
-- **Tipos:** Definir interfaces y tipos en archivos `.ts` o junto al componente (`MiBoton.types.ts`).
+### SEO
 
-## 3. Buenas prácticas de codificación
-- Aplicar **ESLint** con la configuración `eslint-config-airbnb-typescript` y el plugin `@typescript-eslint`.
-- Formatear con **Prettier** (indentación de 2 espacios, comillas simples).
-- Preferir componentes funcionales y **React Hooks** sobre clases.
-- **Tipado estricto:** habilitar `strict` en `tsconfig.json`, usar tipos explícitos para props, estado y retornos de funciones.
-- Seguir los **principios SOLID**:
-  - **S**ingle Responsibility: Cada componente o módulo debe tener una única responsabilidad.
-  - **O**pen/Closed: Los módulos deben estar abiertos a extensión pero cerrados a modificación.
-  - **L**iskov Substitution: Los componentes deben poder sustituirse sin romper el comportamiento.
-  - **I**nterface Segregation: Definir interfaces pequeñas y específicas para props y contextos.
-  - **D**ependency Inversion: Dependencias invertidas mediante inyección de dependencias (p. ej., pasando servicios como props o usando contextos).
-- Utilizar **patrones de diseño** comunes en React:
-  - **Container‑Presenter** para separar lógica de presentación.
-  - **Higher‑Order Components** o **Render Props** cuando sea necesario reutilizar lógica.
-  - **Compound Components** para componentes que trabajan juntos.
-- Evitar el *prop‑drilling* profundo; usar Context API o una solución de gestión de estado cuando corresponda.
+- Configurar meta-etiquetas desde los layouts o directamente en las páginas (`<head>` de Astro)
+- Establecer `title`, `description`, `og:*`, `twitter:*` cuando corresponda
+- Usar sitemap, robots.txt y otros archivos de soporte SEO desde `public/` o integraciones de Astro
 
-## 4. Gestión del estado
-- Estado local: `useState` / `useReducer` con tipado explícito.
-- Estado global: **React Context** para casos simples, **Redux Toolkit** (con `@reduxjs/toolkit` y tipado) para estados complejos.
-- Mantener los efectos secundarios en `useEffect` o hooks personalizados tipados.
+## 8. Rendimiento y Escalabilidad
 
+### Características de Astro
 
+- Generación estática por defecto
+- Partial Hydration: solo hidratar componentes cuando sea necesario
+- Usar directivas `client:*` con criterio, evitando hidratar componentes que no lo necesitan
 
-## 7. Accesibilidad y SEO
-- Usar elementos HTML semánticos.
-- Garantizar que todos los elementos interactivos sean accesibles con teclado.
-- Añadir atributos `aria-` cuando sea necesario.
-- Proveer texto `alt` descriptivo para imágenes.
-- Gestionar meta‑etiquetas con `react-helmet` para SEO.
+### Optimización de Imágenes
 
-## 8. Rendimiento y escalabilidad
-- **Code‑splitting** con `React.lazy` y `Suspense`.
-- Optimizar imágenes (formato WebP, tamaños adecuados).
-- Aplicar memoización (`React.memo`, `useMemo`, `useCallback`) donde sea beneficioso.
-- Evitar renders innecesarios.
-- Diseñar la arquitectura pensando en la escalabilidad: módulos independientes, pruebas exhaustivas y documentación clara.
+- Usar `@astrojs/image` o `astro:assets` para optimizar imágenes (formatos modernos, tamaños adecuados)
+
+### Optimización de Islas de UI
+
+- En React, usar `React.memo`, `useMemo`, `useCallback` solo cuando el beneficio esté claro
+- Evitar renders innecesarios
+
+### Arquitectura Escalable
+
+- Módulos independientes, reutilizables y testeables
+- Documentar convenciones y decisiones de arquitectura
 
 ## 9. Despliegue
-- Compilar con `npm run build` (o `yarn build`).
-- Desplegar los assets estáticos en un CDN o servicio de hosting (Vercel, Netlify, etc.).
-- Las variables de entorno deben comenzar con `REACT_APP_`.
 
-## 10. Reglas de código
-- **Sin comentarios**: El código debe ser auto‑explicativo; los nombres de variables, funciones y componentes deben ser lo suficientemente descriptivos para no necesitar comentarios.
-- **Prohibido usar emojis** en el código, documentación o nombres de archivos.
-- **Eliminar código no utilizado**: Mantener el repositorio limpio; cualquier código que no se use debe ser removido.
-- **Funciones reutilizables**: Extraer lógica repetitiva a funciones o hooks reutilizables para evitar duplicación.
+### Build
 
----
-*Este documento es vivo; actualízalo a medida que el proyecto evolucione.*
+- Construir con: `npm run build` / `pnpm build` / `yarn build`
+- Configurar adaptadores según el destino: Static, Vercel, Netlify, SSR, etc.
+
+### Hosting
+
+- Desplegar los archivos generados (`dist/`) en servicios compatibles:
+  - Vercel, Netlify, Cloudflare Pages, etc.
+
+### Variables de Entorno
+
+- Usar el sistema de variables de entorno de Astro
+- Mantener nombres consistentes y evitar exponer secretos en el cliente
+- Solo exponer variables públicas que empiecen con `PUBLIC_` (convención de Astro)
+
+## 10. Reglas de Código
+
+### Comentarios
+
+- Sin comentarios innecesarios: el código debe ser autoexplicativo mediante buenos nombres
+- Se permiten comentarios solo cuando aporten contexto que no se pueda derivar del código
+
+### Prohibiciones
+
+- **Prohibido usar emojis** en el código, documentación técnica o nombres de archivos
+
+### Limpieza de Código
+
+- Eliminar código no utilizado: nada de funciones, componentes o imports muertos
+- Limpiar archivos y módulos al refactorizar
+
+### Reutilización
+
+- Extraer lógica repetitiva a utilidades (`utils/`) o hooks de framework (en islas) para evitar duplicación
+
+### Consistencia
+
+- Mantener una estructura y estilo consistentes
+- Seguir las reglas de ESLint y Prettier sin desactivarlas salvo casos muy justificados

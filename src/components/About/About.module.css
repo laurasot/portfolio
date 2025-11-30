@@ -109,7 +109,7 @@
 .aboutText {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-md);
+    gap: var(--spacing-xl);
     padding-left: 0;
     margin-left: 0;
     max-width: 70ch;
@@ -129,7 +129,41 @@
     text-align: left;
 }
 
+.aboutParagraphDesktop {
+    margin-bottom: var(--spacing-xl);
+}
+
+.aboutParagraphDesktop:last-child {
+    margin-bottom: 0;
+}
+
 .aboutParagraph:first-child {
+    font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+    font-weight: var(--font-weight-black);
+    line-height: 1.2;
+}
+
+.aboutParagraphDesktop {
+    display: block;
+}
+
+.aboutParagraphMobile {
+    display: none;
+}
+
+.aboutParagraphMobileFirst {
+    font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+    font-weight: var(--font-weight-black);
+    line-height: 1.2;
+}
+
+.aboutParagraphMobile:first-of-type {
+    font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+    font-weight: var(--font-weight-black);
+    line-height: 1.2;
+}
+
+.aboutParagraphMobile:first-of-type {
     font-size: clamp(1.375rem, 2.5vw, 1.75rem);
     font-weight: var(--font-weight-black);
     line-height: 1.2;
@@ -228,25 +262,163 @@
 }
 
 @media (max-width: 768px) {
-    .sectionTitle {
-        font-size: clamp(2.5rem, 12vw, 4rem);
+    .aboutContainer {
+        padding: var(--spacing-2xl) 0 var(--spacing-4xl) 0;
+        min-height: auto;
     }
 
-    .skillTitle {
-        font-size: clamp(2rem, 8vw, 3rem);
+    .aboutContent {
+        padding-left: var(--spacing-md);
+        padding-right: var(--spacing-md);
+    }
+
+    .sectionTitle {
+        font-size: clamp(2rem, 10vw, 3rem);
+        margin-left: 0;
+    }
+
+    .sectionSubtitle {
+        font-size: clamp(0.75rem, 2.5vw, 0.9375rem);
+    }
+
+    .aboutGrid {
+        gap: var(--spacing-3xl);
+        margin-top: var(--spacing-lg);
     }
 
     .aboutText {
         max-width: 100%;
     }
 
-    .aboutContent::before {
-        width: 50%;
-        height: 200px;
+    .aboutParagraph {
+        font-size: clamp(0.875rem, 3.5vw, 1.0625rem);
+    }
+
+    .aboutParagraphDesktop:first-child {
+        display: none;
+    }
+
+    .aboutParagraphDesktop {
+        display: none;
+    }
+
+    .aboutParagraphMobile {
+        display: block;
+        font-size: clamp(0.875rem, 3.5vw, 1.0625rem);
+    }
+
+    .aboutParagraphMobileFirst {
+        font-size: clamp(1.0625rem, 5vw, 1.375rem);
+        font-weight: var(--font-weight-black);
+        line-height: 1.2;
+    }
+
+    .skillsContainer {
+        gap: var(--spacing-3xl);
+    }
+
+    .skillCategory {
+        padding-left: var(--spacing-md);
+    }
+
+    .skillCategory::before {
+        width: 6px;
+    }
+
+    .skillTitle {
+        font-size: clamp(1.75rem, 7vw, 2.5rem);
     }
 
     .skillCategory:nth-child(2) .skillTitle {
         margin-left: 0;
+    }
+
+    .skillTag {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.6875rem;
+    }
+
+    .aboutContent::before {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .aboutContainer {
+        padding: var(--spacing-xl) 0 var(--spacing-3xl) 0;
+    }
+
+    .aboutContent {
+        padding-left: var(--spacing-sm);
+        padding-right: var(--spacing-sm);
+    }
+
+    .sectionTitle {
+        font-size: clamp(1.75rem, 13vw, 2.5rem);
+    }
+
+    .aboutGrid {
+        gap: var(--spacing-2xl);
+        margin-top: var(--spacing-md);
+    }
+
+    .aboutParagraph {
+        font-size: clamp(0.8125rem, 4vw, 1rem);
+        line-height: 1.4;
+    }
+
+    .aboutParagraphDesktop:first-child {
+        display: none;
+    }
+
+    .aboutParagraphDesktop {
+        display: none;
+    }
+
+    .aboutParagraphMobile {
+        display: block;
+        font-size: clamp(0.8125rem, 4vw, 1rem);
+        line-height: 1.4;
+    }
+
+    .aboutParagraphMobileFirst {
+        font-size: clamp(1rem, 5.5vw, 1.3125rem);
+        font-weight: var(--font-weight-black);
+        line-height: 1.2;
+    }
+
+    .skillsContainer {
+        gap: var(--spacing-2xl);
+    }
+
+    .skillCategory {
+        padding-left: var(--spacing-sm);
+    }
+
+    .skillCategory::before {
+        width: 4px;
+    }
+
+    .skillHeader {
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+    }
+
+    .skillTitle {
+        font-size: clamp(1.5rem, 9vw, 2.25rem);
+    }
+
+    .skillList {
+        gap: var(--spacing-xs);
+    }
+
+    .skillTag {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.625rem;
+    }
+
+    .aboutContent::before {
+        display: none;
     }
 }
 

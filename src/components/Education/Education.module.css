@@ -381,6 +381,34 @@
     color: var(--color-cream);
 }
 
+/* ====== BASE ACORDEÓN (desktop: desactivado) ====== */
+/* ====== BASE ACORDEÓN (desktop: desactivado) ====== */
+.cardToggle {
+    display: none;              /* oculto en desktop */
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
+}
+
+.toggleIcon {
+    display: none;              /* solo se muestra en móvil */
+}
+
+.cardBody {
+    /* ANTES: display: block;  👈 */
+    display: contents;          /* ahora el wrapper es “invisible” en desktop */
+}
+
+/* Por defecto usamos el título del contenido (cardBody); 
+   el del botón solo se usa en móvil */
+.cardToggle .educationTitle {
+    display: none;
+}
+
+
 .educationCard[data-type="Educación"] .educationTag {
     background: var(--color-black);
     color: var(--color-cream) !important;
@@ -439,21 +467,37 @@
 
 @media (max-width: 768px) {
     .educationContainer {
-        padding: var(--spacing-4xl) 0 var(--spacing-4xl) 0;
+        padding: var(--spacing-3xl) 0 var(--spacing-3xl) 0;
+        min-height: auto;
+    }
+
+    .educationContent {
+        margin-left: var(--spacing-sm);
+        margin-right: var(--spacing-sm);
+        padding-right: 0;
+    }
+
+    .sectionTitle {
+        font-size: clamp(2rem, 10vw, 3rem);
     }
 
     .educationSection {
-        margin-bottom: 48px;
+        margin-bottom: var(--spacing-3xl);
     }
 
     .certificationSection {
-        margin-top: 48px;
+        margin-top: var(--spacing-3xl);
+    }
+
+    .subsectionTitle {
+        font-size: clamp(1rem, 4.5vw, 1.5rem);
+        margin-bottom: var(--spacing-md);
     }
 
     .educationGrid {
-        gap: 16px;
+        gap: var(--spacing-md);
     }
-    
+
     .educationGrid .educationCard:nth-child(2) {
         margin-left: 0;
         margin-top: 0;
@@ -461,29 +505,103 @@
 
     .certificationGrid {
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: var(--spacing-md);
     }
 
+    /* Tarjetas más compactas y a ancho completo */
     .educationCard {
-        padding: var(--spacing-lg);
+        padding: var(--spacing-md) var(--spacing-sm);
+        width: 100%;
     }
-    
+
+    .educationCard[data-type="Educación"] {
+        padding: var(--spacing-md) var(--spacing-sm);
+    }
+
     .educationCard[data-type="Educación"]::before {
         transform: none;
     }
 
-    .subsectionTitle {
-        margin-bottom: 16px;
+    .educationCard[data-type="Certificación"] {
+        border-left-width: 4px;
+        min-height: auto; /* 👈 quita la altura enorme */
+        padding: var(--spacing-md) var(--spacing-sm);
     }
-    
+
     .educationCard[data-type="Educación"] .educationTitle {
-        font-size: clamp(1.5rem, 6vw, 2rem);
+        font-size: clamp(1.2rem, 5vw, 1.6rem);
     }
-    
+
     .educationCard[data-type="Educación"] .educationYear {
-        font-size: clamp(3rem, 15vw, 4rem);
+        font-size: clamp(2.4rem, 12vw, 3.2rem);
+    }
+
+    .educationCard[data-type="Certificación"] .educationTitle {
+        font-size: clamp(0.95rem, 3.5vw, 1.25rem);
+    }
+
+    .educationCard[data-type="Certificación"] .educationYear {
+        font-size: clamp(1.6rem, 6vw, 2.2rem);
+    }
+
+    /* ====== ACORDEÓN SOLO EN MÓVIL ====== */
+
+    .cardToggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--spacing-sm) 0;
+        width: 100%;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        text-align: left;
+    }
+
+    .cardToggle .educationTitle {
+        display: block;   /* título en el botón */
+        margin-bottom: 0;
+        flex: 1;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        line-height: 1.3;
+    }
+
+    .toggleIcon {
+        display: block;
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        font-weight: var(--font-weight-black);
+        line-height: 1;
+        margin-left: var(--spacing-sm);
+        color: var(--color-cream);
+        flex-shrink: 0;
+    }
+
+    .educationCard[data-type="Educación"] .toggleIcon {
+        color: var(--color-black);
+    }
+
+    /* cuerpo del acordeón */
+    .cardBody {
+        display: none;
+        padding-top: var(--spacing-sm);
+    }
+
+    .educationCard[data-open="true"] .cardBody {
+        display: block;
+    }
+
+    /* ocultamos el título dentro del body porque ya está en el botón */
+    .cardBody > .educationTitle {
+        display: none;
+    }
+
+    .educationTags {
+        margin-top: var(--spacing-sm);
     }
 }
+
 
 @media (prefers-reduced-motion: reduce) {
     .educationContainer,

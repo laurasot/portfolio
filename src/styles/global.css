@@ -130,5 +130,32 @@ ol {
   h3 {
     font-size: var(--font-size-2xl);
   }
+
+  p {
+    margin-bottom: var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: var(--font-size-3xl);
+  }
+
+  h2 {
+    font-size: var(--font-size-2xl);
+  }
+
+  h3 {
+    font-size: var(--font-size-xl);
+  }
+
+  p {
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+  }
+
+  body {
+    font-size: var(--font-size-sm);
+  }
 }
 

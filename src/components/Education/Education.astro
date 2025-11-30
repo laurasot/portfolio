@@ -90,7 +90,6 @@ const certificationItems: EducationItem[] = [
             { name: 'Redes Neuronales' },
             { name: 'Machine Learning' },
             { name: 'Generative AI', highlighted: true },
-
         ],
         badgeUrl: 'https://www.credly.com/badges/20919825-bb26-4752-b657-fa22b674730e/linked_in_profile',
     },
@@ -135,31 +134,53 @@ const certificationItems: EducationItem[] = [
                     <article
                         class={styles.educationCard}
                         data-type={item.type}
+                        data-id={item.id}
+                        data-accordion="education-card"
                     >
-                        <div class={styles.cardHeader}>
-                            <span class={styles.educationYear}>{item.year}</span>
-                        </div>
+                        {/* Botón de acordeón (solo visible en móvil) */}
+                        <button
+                            type="button"
+                            class={styles.cardToggle}
+                            data-role="card-toggle"
+                            aria-expanded="false"
+                            aria-controls={`education-content-${item.id}`}
+                        >
+                            <h4 class={styles.educationTitle}>{item.title}</h4>
+                            <span class={styles.toggleIcon}>+</span>
+                        </button>
 
-                        <h4 class={styles.educationTitle}>{item.title}</h4>
-                        <p class={styles.educationInstitution}>{item.institution}</p>
-
-                        {item.description && (
-                            <p class={styles.educationDescription}>
-                                {item.description}
-                            </p>
-                        )}
-
-                        {item.tags && item.tags.length > 0 && (
-                            <div class={styles.educationTags}>
-                                {item.tags.map((tag) => (
-                                    <span 
-                                        class={`${styles.educationTag} ${tag.highlighted ? styles.highlighted : ''}`}
-                                    >
-                                        {tag.name}
-                                    </span>
-                                ))}
+                        {/* Contenido real de la tarjeta */}
+                        <div
+                            class={styles.cardBody}
+                            data-role="card-body"
+                            id={`education-content-${item.id}`}
+                        >
+                            <div class={styles.cardHeader}>
+                                <span class={styles.educationYear}>{item.year}</span>
                             </div>
-                        )}
+
+                            {/* Título para desktop (se oculta en móvil) */}
+                            <h4 class={styles.educationTitle}>{item.title}</h4>
+                            <p class={styles.educationInstitution}>{item.institution}</p>
+
+                            {item.description && (
+                                <p class={styles.educationDescription}>
+                                    {item.description}
+                                </p>
+                            )}
+
+                            {item.tags && item.tags.length > 0 && (
+                                <div class={styles.educationTags}>
+                                    {item.tags.map((tag) => (
+                                        <span 
+                                            class={`${styles.educationTag} ${tag.highlighted ? styles.highlighted : ''}`}
+                                        >
+                                            {tag.name}
+                                        </span>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     </article>
                 ))}
             </div>
@@ -172,46 +193,109 @@ const certificationItems: EducationItem[] = [
                     <article
                         class={styles.educationCard}
                         data-type={item.type}
+                        data-id={item.id}
+                        data-accordion="education-card"
                     >
-                        <div class={styles.cardHeader}>
-                            <span class={styles.educationYear}>{item.year}</span>
-                        </div>
+                        {/* Botón de acordeón (solo móvil) */}
+                        <button
+                            type="button"
+                            class={styles.cardToggle}
+                            data-role="card-toggle"
+                            aria-expanded="false"
+                            aria-controls={`certification-content-${item.id}`}
+                        >
+                            <h4 class={styles.educationTitle}>{item.title}</h4>
+                            <span class={styles.toggleIcon}>+</span>
+                        </button>
 
-                        <h4 class={styles.educationTitle}>{item.title}</h4>
-                        <p class={styles.educationInstitution}>{item.institution}</p>
-
-                        {item.description && (
-                            <p class={styles.educationDescription}>
-                                {item.description}
-                            </p>
-                        )}
-
-                        {item.tags && item.tags.length > 0 && (
-                            <div class={styles.educationTags}>
-                                {item.tags.map((tag) => (
-                                    <span 
-                                        class={`${styles.educationTag} ${tag.highlighted ? styles.highlighted : ''}`}
-                                    >
-                                        {tag.name}
-                                    </span>
-                                ))}
+                        {/* Contenido real */}
+                        <div
+                            class={styles.cardBody}
+                            data-role="card-body"
+                            id={`certification-content-${item.id}`}
+                        >
+                            <div class={styles.cardHeader}>
+                                <span class={styles.educationYear}>{item.year}</span>
                             </div>
-                        )}
 
-                        {item.badgeUrl && item.badgeUrl.trim() !== '' && (
-                            <a
-                                href={item.badgeUrl}
-                                class={styles.badgeButton}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                VER BADGE
-                            </a>
-                        )}
+                            {/* Título para desktop */}
+                            <h4 class={styles.educationTitle}>{item.title}</h4>
+                            <p class={styles.educationInstitution}>{item.institution}</p>
+
+                            {item.description && (
+                                <p class={styles.educationDescription}>
+                                    {item.description}
+                                </p>
+                            )}
+
+                            {item.tags && item.tags.length > 0 && (
+                                <div class={styles.educationTags}>
+                                    {item.tags.map((tag) => (
+                                        <span 
+                                            class={`${styles.educationTag} ${tag.highlighted ? styles.highlighted : ''}`}
+                                        >
+                                            {tag.name}
+                                        </span>
+                                    ))}
+                                </div>
+                            )}
+
+                            {item.badgeUrl && item.badgeUrl.trim() !== '' && (
+                                <a
+                                    href={item.badgeUrl}
+                                    class={styles.badgeButton}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    VER BADGE
+                                </a>
+                            )}
+                        </div>
                     </article>
                 ))}
             </div>
         </div>
     </div>
-</section>
 
+    <script>
+        if (typeof document !== 'undefined') {
+            const initEducationAccordion = () => {
+                const isMobile = window.matchMedia('(max-width: 768px)').matches;
+                const cards = document.querySelectorAll('[data-accordion="education-card"]');
+
+                cards.forEach((card) => {
+                    const toggle = card.querySelector('[data-role="card-toggle"]') as HTMLButtonElement | null;
+                    const body = card.querySelector('[data-role="card-body"]') as HTMLElement | null;
+                    if (!toggle || !body) return;
+
+                    // Desktop → acordeón desactivado
+                    if (!isMobile) {
+                        card.removeAttribute('data-open');
+                        toggle.setAttribute('aria-expanded', 'true');
+                        return;
+                    }
+
+                    // Móvil → colapsado por defecto si aún no se inicializó
+                    if (!card.hasAttribute('data-init')) {
+                        card.setAttribute('data-init', 'true');
+                        toggle.setAttribute('aria-expanded', 'false');
+                        card.setAttribute('data-open', 'false');
+
+                        toggle.addEventListener('click', () => {
+                            const isOpen = card.getAttribute('data-open') === 'true';
+                            card.setAttribute('data-open', isOpen ? 'false' : 'true');
+                            toggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+                        });
+                    }
+                });
+            };
+
+            document.addEventListener('DOMContentLoaded', initEducationAccordion);
+            window.addEventListener('resize', () => {
+                // pequeño debounce
+                window.clearTimeout((window as any).__eduResizeTimer);
+                (window as any).__eduResizeTimer = window.setTimeout(initEducationAccordion, 200);
+            });
+        }
+    </script>
+</section>
