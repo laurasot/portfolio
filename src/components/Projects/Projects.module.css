@@ -298,6 +298,36 @@
     background: transparent;
     margin: 0 var(--spacing-lg) var(--spacing-lg);
     text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.projectLink:hover {
+    background: var(--color-black);
+    color: var(--color-cream);
+}
+
+.projectLink:hover .linkArrow {
+    transform: translateX(4px);
+}
+
+.projectCard:nth-child(1) .projectLink {
+    border-color: var(--color-cream);
+    color: var(--color-cream);
+}
+
+.projectCard:nth-child(1) .projectLink:hover {
+    background: var(--color-cream);
+    color: var(--color-black);
+}
+
+.projectCard:nth-child(4) .projectLink {
+    border-color: var(--color-cream);
+    color: var(--color-cream);
+}
+
+.projectCard:nth-child(4) .projectLink:hover {
+    background: var(--color-cream);
+    color: var(--color-black);
 }
 
 .linkArrow {
