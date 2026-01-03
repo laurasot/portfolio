@@ -569,6 +569,76 @@
 }
 
 
+/* Media query para pantallas mayores a 15 pulgadas (1920px+) */
+@media (min-width: 1920px) {
+    .projectsContent {
+        max-width: 1800px;
+        padding-left: var(--spacing-xl);
+        padding-right: var(--spacing-xl);
+    }
+
+    .sectionTitle {
+        font-size: clamp(4rem, 6vw, 7rem);
+    }
+
+    .sectionSubtitle {
+        font-size: clamp(1.25rem, 1.5vw, 1.5rem);
+        max-width: 60ch;
+    }
+
+    .projectsGrid {
+        gap: 0;
+    }
+
+    .projectCard::before {
+        font-size: clamp(8rem, 12vw, 12rem);
+    }
+
+    .projectCategory {
+        font-size: 1.1rem;
+        top: var(--spacing-xl);
+        right: var(--spacing-xl);
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .projectTitle {
+        font-size: clamp(2rem, 2.5vw, 3rem);
+        padding: var(--spacing-5xl) var(--spacing-xl) 0;
+    }
+
+    .projectCard:nth-child(1) .projectTitle {
+        font-size: clamp(3rem, 4vw, 4.5rem);
+        padding-top: var(--spacing-6xl);
+    }
+
+    .projectDescription {
+        font-size: var(--font-size-lg);
+        padding: 0 var(--spacing-xl);
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .projectTags {
+        padding: 0 var(--spacing-xl) var(--spacing-2xl);
+        gap: var(--spacing-sm);
+    }
+
+    .projectTag {
+        padding: var(--spacing-sm) var(--spacing-lg);
+        font-size: 0.875rem;
+    }
+
+    .projectLink {
+        padding: var(--spacing-lg) var(--spacing-xl);
+        font-size: var(--font-size-base);
+        margin: 0 var(--spacing-xl) var(--spacing-xl);
+        border-width: 4px;
+    }
+
+    .projectCard:nth-child(4)::before {
+        font-size: clamp(8rem, 12vw, 12rem);
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .projectsContainer,
     .projectsContent,

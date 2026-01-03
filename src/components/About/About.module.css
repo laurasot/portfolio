@@ -422,6 +422,71 @@
     }
 }
 
+/* Media query para pantallas mayores a 15 pulgadas (1920px+) */
+@media (min-width: 1920px) {
+    .aboutContent {
+        max-width: 1800px;
+        padding-left: var(--spacing-xl);
+        padding-right: var(--spacing-xl);
+    }
+
+    .sectionTitle {
+        font-size: clamp(4rem, 6vw, 7rem);
+    }
+
+    .sectionSubtitle {
+        font-size: clamp(1.25rem, 1.5vw, 1.75rem);
+    }
+
+    .aboutGrid {
+        gap: var(--spacing-5xl);
+        margin-top: var(--spacing-2xl);
+    }
+
+    .aboutText {
+        max-width: 80ch;
+        gap: var(--spacing-2xl);
+    }
+
+    .aboutParagraph {
+        font-size: clamp(1.25rem, 1.5vw, 1.5rem);
+    }
+
+    .aboutParagraph:first-child {
+        font-size: clamp(1.5rem, 2vw, 2rem);
+    }
+
+    .skillsContainer {
+        gap: var(--spacing-5xl);
+    }
+
+    .skillCategory {
+        padding-left: var(--spacing-xl);
+    }
+
+    .skillCategory::before {
+        width: 10px;
+    }
+
+    .skillTitle {
+        font-size: clamp(3rem, 4vw, 5rem);
+    }
+
+    .skillCategory:nth-child(2) .skillTitle {
+        margin-left: var(--spacing-3xl);
+    }
+
+    .skillTag {
+        padding: var(--spacing-sm) var(--spacing-xl);
+        font-size: var(--font-size-base);
+    }
+
+    .aboutContent::before {
+        width: 45%;
+        height: 350px;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .aboutContainer,
     .aboutContent,

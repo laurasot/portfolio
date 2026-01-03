@@ -42,6 +42,22 @@
     }
 }
 
+/* Media query para pantallas mayores a 15 pulgadas (1920px+) */
+@media (min-width: 1920px) {
+    .marqueeContainer {
+        padding: var(--spacing-5xl) 0;
+    }
+
+    .marqueeText {
+        font-size: clamp(4rem, 6vw, 7rem);
+        padding-right: 5rem;
+    }
+
+    .marqueeTrack {
+        animation-duration: 45s;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .marqueeTrack {
         animation: none;

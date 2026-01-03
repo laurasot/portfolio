@@ -360,4 +360,80 @@
       font-size: 0.8rem;
     }
   }
+
+  /* Media query para pantallas mayores a 15 pulgadas (1920px+) */
+  @media (min-width: 1920px) {
+    .contentLayer {
+      max-width: 1800px;
+      padding: var(--spacing-4xl) var(--spacing-3xl);
+    }
+
+    .textContent {
+      max-width: 1100px;
+    }
+
+    .name {
+      font-size: clamp(10rem, 12vw, 16rem);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .labelSmall {
+      font-size: 0.875rem;
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .taglineBlock {
+      margin-bottom: var(--spacing-4xl);
+      gap: var(--spacing-xl);
+    }
+
+    .taglineLine {
+      width: 100px;
+      height: 5px;
+    }
+
+    .tagline {
+      font-size: clamp(1.5rem, 1.8vw, 2rem);
+    }
+
+    .rolesContainer {
+      gap: var(--spacing-3xl);
+    }
+
+    .roleBlock {
+      padding: var(--spacing-xl) var(--spacing-2xl);
+      min-width: 250px;
+    }
+
+    .roleNumber {
+      font-size: 2.5rem;
+    }
+
+    .roleText {
+      font-size: 1.5rem;
+    }
+
+    .accentBar[data-color="red"][data-position="top"] {
+      width: 38%;
+    }
+
+    .accentBar[data-color="yellow"][data-position="middle"] {
+      width: 42%;
+    }
+
+    .accentBar[data-color="red"][data-position="bottom"] {
+      width: 32%;
+    }
+
+    .solidBlock[data-position="hero"] {
+      width: 28%;
+      height: 38%;
+    }
+
+    .cornerTopLeft,
+    .cornerBottomRight {
+      width: 100px;
+      height: 100px;
+    }
+  }
   

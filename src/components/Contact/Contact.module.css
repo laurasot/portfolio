@@ -393,6 +393,73 @@
     }
 }
 
+/* Media query para pantallas mayores a 15 pulgadas (1920px+) */
+@media (min-width: 1920px) {
+    .contactContent {
+        max-width: 1800px;
+        padding-left: var(--spacing-xl);
+        padding-right: var(--spacing-xl);
+    }
+
+    .sectionTitle {
+        font-size: clamp(4rem, 6vw, 7rem);
+    }
+
+    .sectionSubtitle {
+        font-size: clamp(1.25rem, 1.5vw, 1.5rem);
+        max-width: 55ch;
+        margin-bottom: var(--spacing-5xl);
+    }
+
+    .contactLinks {
+        margin-bottom: var(--spacing-6xl);
+    }
+
+    .contactLink:nth-child(1) {
+        font-size: clamp(4rem, 6vw, 6rem);
+    }
+
+    .contactLink:nth-child(2) {
+        font-size: clamp(2.5rem, 3.5vw, 3.5rem);
+        padding-left: 80px;
+    }
+
+    .contactLink:nth-child(2)::before {
+        width: 50px;
+        height: 5px;
+    }
+
+    .contactLink:nth-child(3) {
+        font-size: clamp(2rem, 2.5vw, 3rem);
+        margin-left: 160px;
+    }
+
+    .footer {
+        margin-top: var(--spacing-6xl);
+        padding-top: var(--spacing-4xl);
+        padding-bottom: var(--spacing-4xl);
+    }
+
+    .footerText {
+        font-size: var(--font-size-lg);
+        max-width: 60ch;
+        margin-bottom: var(--spacing-3xl);
+    }
+
+    .footerSignature {
+        font-size: clamp(4rem, 5vw, 6rem);
+    }
+
+    .footerAlias {
+        font-size: var(--font-size-xl);
+    }
+
+    .contactContainer::before {
+        width: 40%;
+        height: 65%;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .contactContainer,
     .contactContent,
