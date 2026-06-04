@@ -6,6 +6,11 @@ interface Tag {
     highlighted?: boolean;
 }
 
+interface ProjectLink {
+    url: string;
+    label: string;
+}
+
 interface Project {
     id: number;
     title: string;
@@ -14,6 +19,7 @@ interface Project {
     icon: string;
     tags: Tag[];
     link?: string;
+    links?: ProjectLink[];
 }
 
 const projects: Project[] = [
@@ -54,7 +60,10 @@ const projects: Project[] = [
             'Asistente inteligente para reuniones virtuales que transcribe conversaciones en tiempo real (micrófono + audio del sistema) y genera sugerencias de respuesta mediante IA. Combina captura dual de audio en aplicación Electron, backend FastAPI con proveedores STT intercambiables (Deepgram, AssemblyAI, AWS, Whisper), y modelos LLM (LangChain) para análisis contextual y recomendaciones automáticas. Arquitectura con WebSocket binario, procesamiento de baja latencia (500ms) y aislamiento estricto por sesión.',
         category: 'En desarrollo',
         icon: '',
-        link: 'https://github.com/laurasot/speakflow-api',
+        links: [
+            { url: 'https://github.com/laurasot/speakflow-api', label: 'Backend API' },
+            { url: 'https://github.com/laurasot/speakflow-desktop', label: 'Desktop App' }
+        ],
         tags: [
             { name: 'AI Assistant', highlighted: true },
             { name: 'LangChain', highlighted: true },
@@ -182,6 +191,21 @@ const projects: Project[] = [
                                 Ver proyecto
                                 <span class={styles.linkArrow}>→</span>
                             </a>
+                        )}
+                        {project.links && (
+                            <div class={styles.projectLinks}>
+                                {project.links.map((link) => (
+                                    <a
+                                        href={link.url}
+                                        class={styles.projectLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {link.label}
+                                        <span class={styles.linkArrow}>→</span>
+                                    </a>
+                                ))}
+                            </div>
                         )}
                     </article>
                 );
