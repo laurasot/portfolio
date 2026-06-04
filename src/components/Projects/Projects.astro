@@ -19,23 +19,9 @@ interface Project {
 const projects: Project[] = [
     {
         id: 1,
-        title: 'Generación Musical con IA',
-        description:
-            'Sistema de deep learning para generar composiciones musicales originales basadas en análisis de patrones armónicos y melódicos.',
-        category: 'En desarrollo',
-        icon: '',
-        tags: [
-            { name: 'TensorFlow' },
-            { name: 'MIDI' },
-            { name: 'RNN', highlighted: true },
-            { name: 'Composition' }
-        ],
-    },
-    {
-        id: 2,
         title: 'MUSIC UNDER THE HOOD',
         description:
-            'Motor de análisis musical basado en procesamiento de señal y machine learning que estudia tempo, ritmo, timbre, armonía y progresiones musicales para inferir géneros, influencias estilísticas y descriptores musicales avanzados.',
+            'Sistema de análisis musical automatizado que combina procesamiento digital de señales, modelos transformer pre-entrenados y teoría musical para extraer características avanzadas: acordes, tonalidad, modos, tempo, ritmo, timbre y estructura armónica. Implementado en Python con Librosa, PyTorch y Transformers, con soporte CUDA para procesamiento acelerado.',
         category: 'En desarrollo',
         icon: '',
         link: 'https://github.com/laurasot/music-intelligence-backend/tree/develop',
@@ -48,7 +34,7 @@ const projects: Project[] = [
         ],
     },
     {
-        id: 3,
+        id: 2,
         title: 'Interpretaciones de Cueca',
         description:
             'Interpretaciones personales de cuecas experimentales del compositor Patricio Fuentes, explorando texturas rítmicas con un enfoque expresivo contemporáneo.',
@@ -60,9 +46,79 @@ const projects: Project[] = [
             { name: 'Folclor' },
             { name: 'Performance' }
         ],
-    },        
-    /*{
+    },
+    {
+        id: 3,
+        title: 'SPEAKFLOW',
+        description:
+            'Asistente inteligente para reuniones virtuales que transcribe conversaciones en tiempo real (micrófono + audio del sistema) y genera sugerencias de respuesta mediante IA. Combina captura dual de audio en aplicación Electron, backend FastAPI con proveedores STT intercambiables (Deepgram, AssemblyAI, AWS, Whisper), y modelos LLM (LangChain) para análisis contextual y recomendaciones automáticas. Arquitectura con WebSocket binario, procesamiento de baja latencia (500ms) y aislamiento estricto por sesión.',
+        category: 'En desarrollo',
+        icon: '',
+        link: 'https://github.com/laurasot/speakflow-api',
+        tags: [
+            { name: 'AI Assistant', highlighted: true },
+            { name: 'LangChain', highlighted: true },
+            { name: 'Speech-to-Text' },
+            { name: 'Real-time' },
+            { name: 'Meeting Intelligence' }
+        ],
+    },
+    {
         id: 4,
+        title: 'Traductor de Lengua de Señas con IA',
+        description:
+            'Sistema de traducción a lengua de señas impulsado por IA generativa para empresa líder de medios en Chile. Arquitectura multilenguaje (Python + Go + TypeScript) diseñada para cumplir requisitos de latencia crítica (<5s). Implementa traducciones inteligentes con RAG, transcripción en tiempo real con streaming, modelos open source optimizados, y renderizado mediante biblioteca de videos pregrabados de señas.',
+        category: 'AI',
+        icon: '',
+        tags: [
+            { name: 'Generative AI', highlighted: true },
+            { name: 'RAG', highlighted: true },
+            { name: 'Python' },
+            { name: 'Go' },
+            { name: 'TypeScript' },
+            { name: 'Real-time Streaming' },
+            { name: 'Low Latency' },
+            { name: 'Accessibility' }
+        ],
+    },
+    {
+        id: 5,
+        title: 'Asistente de Ventas con IA en Tiempo Real',
+        description:
+            'Sistema de reconocimiento contextual en tiempo real para ingenieros comerciales que identifica automáticamente menciones de proyectos empresariales durante conversaciones naturales. Experiencia inmersiva con detección sub-3 segundos que analiza el discurso del usuario y asocia referencias implícitas a proyectos específicos. Implementa streaming de video sobre protocolo TLS optimizado para latencia ultra-baja, permitiendo respuestas visuales instantáneas que potencian las capacidades de venta.',
+        category: 'AI',
+        icon: '',
+        tags: [
+            { name: 'Real-time AI', highlighted: true },
+            { name: 'NLP', highlighted: true },
+            { name: 'Video Streaming' },
+            { name: 'TLS Protocol' },
+            { name: 'Ultra-low Latency' },
+            { name: 'Sales Intelligence' },
+            { name: 'Context Detection' }
+        ],
+    },
+    {
+        id: 6,
+        title: 'INCIDENT MULTIAGENT',
+        description:
+            'Asistente inteligente para respuesta a incidentes AWS que combina razonamiento en lenguaje natural con acceso directo a CloudWatch y búsqueda web contextual. Arquitectura multi-agente desplegada en Amazon Bedrock AgentCore: un supervisor orquesta agentes especialistas (monitoreo vía MCP tools y contexto web) implementados con Strands Agents SDK. Streaming de eventos en tiempo real, memoria de corto y largo plazo, e infraestructura completa como código con AWS CDK v2.',
+        category: 'AI',
+        icon: '',
+        link: 'https://github.com/laurasot/incident-multiagent',
+        tags: [
+            { name: 'Multi-Agent', highlighted: true },
+            { name: 'AWS Bedrock', highlighted: true },
+            { name: 'AgentCore' },
+            { name: 'Strands SDK' },
+            { name: 'MCP' },
+            { name: 'CloudWatch' },
+            { name: 'CDK' },
+            { name: 'DevOps' }
+        ],
+    }
+    /*{
+        id: 7,
         title: 'Computer Vision para Partituras',
         description:
             'Sistema de reconocimiento óptico de partituras musicales usando redes neuronales convolucionales.',
