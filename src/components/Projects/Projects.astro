@@ -57,7 +57,7 @@ const projects: Project[] = [
         id: 3,
         title: 'SPEAKFLOW',
         description:
-            'Asistente inteligente para reuniones virtuales que transcribe conversaciones en tiempo real (micrófono + audio del sistema) y genera sugerencias de respuesta mediante IA. Combina captura dual de audio en aplicación Electron, backend FastAPI con proveedores STT intercambiables (Deepgram, AssemblyAI, AWS, Whisper), y modelos LLM (LangChain) para análisis contextual y recomendaciones automáticas. Arquitectura con WebSocket binario, procesamiento de baja latencia (500ms) y aislamiento estricto por sesión.',
+            'Copiloto para reuniones virtuales pensado para situaciones donde el usuario no domina completamente el idioma de la conversación: cuando entiende solo una parte de una pregunta, tarda en procesarla, se queda en blanco o sabe qué quiere responder pero no encuentra las palabras correctas. SpeakFlow escucha ambos lados de la conversación en tiempo real —lo que dice el usuario y lo que dicen los demás—, interpreta el contexto con un modelo de IA de latencia ultrabaja y utiliza similitud semántica para detectar los momentos en los que realmente hace falta intervenir. Esto permite diferenciar entre una pausa normal y una situación en la que el usuario necesita apoyo, generando una posible respuesta contextual en menos de 3 segundos, en el idioma adecuado y alineada con lo que se está discutiendo. Funciona en segundo plano y no depende de una plataforma específica de videollamadas, por lo que puede aplicarse en entrevistas, reuniones técnicas, ventas, soporte, procesos de selección o cualquier conversación profesional donde la barrera del idioma pueda afectar la claridad, la velocidad o la seguridad con la que una persona responde.',
         category: 'En desarrollo',
         icon: '',
         links: [
@@ -65,13 +65,22 @@ const projects: Project[] = [
             { url: 'https://github.com/laurasot/speakflow-desktop', label: 'Desktop App' }
         ],
         tags: [
-            { name: 'AI Assistant', highlighted: true },
-            { name: 'LangChain', highlighted: true },
+            { name: 'Electron + React', highlighted: true },
+            { name: 'TypeScript' },
+            { name: 'FastAPI' },
+            { name: 'LangChain' },
+            { name: 'Binary WebSocket' },
             { name: 'Speech-to-Text' },
-            { name: 'Real-time' },
-            { name: 'Meeting Intelligence' }
-        ],
-    },
+            { name: 'LLM' },
+            { name: 'Semantic Similarity' },
+            { name: 'Real-time Audio' },
+            { name: 'Low Latency' },
+            { name: 'Provider Pattern' },
+            { name: 'Groq' },
+            { name: 'Deepgram' },
+            { name: 'Asyncio' }
+            ]
+        },
     {
         id: 4,
         title: 'Traductor de Lengua de Señas con IA',
