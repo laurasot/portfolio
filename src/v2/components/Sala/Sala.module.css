@@ -1,4 +1,4 @@
-/* Solo las clases que usa Sala.astro; el diseño llega en PR 5. */
+/* Solo lo funcional para que el runtime se use; el diseño llega en PR 5. */
 .sala {
   display: block;
 }
@@ -12,6 +12,96 @@
   white-space: nowrap;
 }
 
+.stage {
+  position: relative;
+  max-width: 1440px;
+  aspect-ratio: 1440 / 900;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.cam {
+  position: absolute;
+  inset: 0;
+  transform-origin: 72.22% 37.78%;
+  transition: transform var(--v2-cam, 1600ms) ease;
+}
+
 .pose {
+  position: absolute;
+  inset: 0;
   background-image: var(--img);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 800ms ease;
+}
+
+.pose[data-on] {
+  opacity: 1;
+}
+
+.pose[data-turn] {
+  animation: squash 2000ms ease;
+}
+
+@keyframes squash {
+  50% {
+    scale: 0.94 1;
+  }
+}
+
+.text {
+  position: absolute;
+  left: 11%;
+  top: var(--top, 36.7%);
+  width: 55%;
+}
+
+.line,
+.option,
+.block {
+  opacity: 0;
+  transition: opacity 600ms ease;
+}
+
+.line[data-in],
+.option,
+.block {
+  font-size: clamp(18px, 3vw, 44px);
+}
+
+.line[data-in] {
+  opacity: 1;
+}
+
+.line[data-dim] {
+  opacity: 0.35;
+}
+
+/* Opciones y bloques aparecen cuando el contenedor recibe data-in. */
+[data-in] > .option,
+[data-in] > .block {
+  opacity: 1;
+}
+
+[data-chosen] .option {
+  opacity: 0.25;
+}
+
+[data-chosen] .option[data-pick] {
+  opacity: 1;
+}
+
+.option {
+  background: none;
+  border: 0;
+  margin-right: 2rem;
+  cursor: pointer;
+}
+
+.option:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
 }
