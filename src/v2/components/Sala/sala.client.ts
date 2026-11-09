@@ -1,8 +1,13 @@
 import type { Block, Option, Script, Step } from '../../data/types';
 import { resolve, type State } from './engine';
+import { note, setSound, soundPref } from './sound';
 
-// Tiempos únicos del runtime (ms), tomados del animatic.
-const T = { cam: 1600, line: 1200, fade: 600, choose: 1200, turn: 2000 };
+// Tiempos únicos del runtime (ms), tomados del animatic. Con movimiento reducido, todo a 0:
+// los `hold` de cada paso siguen aplicando, así que el texto sigue siendo legible y completable.
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const T = reduced
+  ? { cam: 0, line: 0, fade: 0, choose: 0, turn: 0 }
+  : { cam: 1600, line: 1200, fade: 600, choose: 1200, turn: 2000 };
 const KEY = 'v2.state';
 
 type Saved = State & { sos?: Step['sospecha'] | null };
@@ -108,6 +113,7 @@ function pick(o: Option, btn: HTMLElement) {
   box.dataset.chosen = '1';
   btn.dataset.pick = '';
   options = [];
+  if (o.note) note(o.note);
   Object.assign(state, o.set);
   later(() => enter(resolve(o.to, state)), T.choose);
 }
@@ -228,4 +234,20 @@ addEventListener('resize', () => {
 });
 fit();
 state = load();
-enter(state.step, true);
+const resumed = state.step !== script.start;
+
+// Portada de sonido solo en una visita nueva y sin preferencia; una sesión retomada la salta.
+const gate = $('[data-gate]');
+if (!resumed && soundPref() === null) {
+  gate.hidden = false;
+  gate.querySelector('button')!.focus();
+  gate.querySelectorAll<HTMLButtonElement>('button').forEach(
+    (b) =>
+      (b.onclick = () => {
+        setSound(b.dataset.sound === '1');
+        gate.hidden = true;
+        if (b.dataset.sound === '1') note(392);
+        enter(state.step, true);
+      }),
+  );
+} else enter(state.step, true);

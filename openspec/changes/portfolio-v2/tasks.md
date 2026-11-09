@@ -124,13 +124,13 @@ Depende de PR 4 (puede ir en paralelo con 4 si se acuerda el contrato de clases/
 
 Depende de PR 5.
 
-- [ ] 6.1 Sonido opt-in
+- [x] 6.1 Sonido opt-in
   - Archivos: `src/v2/components/Sala/sound.ts` (`note(hz)` WebAudio perezoso; `TRACK: string | null = null`; preferencia en `sessionStorage('v2.sound')`), portada con Sí/No en `sala.client.ts`/`Sala.astro`.
   - Aceptación: por defecto no suena nada; con "Sí" suenan las notas de las opciones; con "No" nada. Spec v2-responsive-a11y R8.
-- [ ] 6.2 `prefers-reduced-motion`
+- [x] 6.2 `prefers-reduced-motion`
   - Archivos: `sala.client.ts` (`T` = 0 con la media query), `Sala.module.css` (sin respiración, cámara ni squash).
   - Aceptación: con la preferencia activa todo son cortes secos y sigue siendo completable. Spec v2-responsive-a11y R6.
-- [ ] 6.3 `V2_STRICT` y revisión final
+- [x] 6.3 `V2_STRICT` y revisión final
   - Archivos: documentar en el README de `src/v2/` cómo lanzar `V2_STRICT=1 npm run build` (en PowerShell: `$env:V2_STRICT=1; npm run build`; sin dependencia `cross-env`), ajustes menores de a11y.
   - Aceptación: `npm run build` verde con avisos; `V2_STRICT=1` falla con TODOs; `grep -r "\[\[TODO" dist` los lista; pasada manual en 1440/768/390 y con teclado + lector de pantalla básico. Specs v2-aislamiento R3, R4, v2-responsive-a11y R1–R8.
 
