@@ -1,0 +1,51 @@
+---
+import '../styles/tokens.css';
+
+interface Props {
+  lang: 'es' | 'en';
+  title: string;
+  /** Página equivalente en el otro idioma. */
+  alt: { lang: 'es' | 'en'; href: string; label: string };
+  /** Solo la sala en español: redirige a /en/v2 si el navegador está en inglés y no hay preferencia. */
+  detect?: boolean;
+}
+
+const { lang, title, alt, detect = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <link rel="alternate" hreflang={alt.lang} href={alt.href} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    {
+      detect && (
+        <script is:inline data-target={alt.href}>
+          try {
+            if (!localStorage.getItem('v2.lang') && navigator.language.toLowerCase().startsWith('en'))
+              location.replace(document.currentScript.dataset.target);
+          } catch (e) {}
+        </script>
+      )
+    }
+  </head>
+  <body>
+    <a class="v2-lang" href={alt.href} hreflang={alt.lang} data-lang={alt.lang}>{alt.label}</a>
+    <slot />
+    <script is:inline>
+      document.querySelector('.v2-lang').addEventListener('click', function (e) {
+        try {
+          localStorage.setItem('v2.lang', e.currentTarget.dataset.lang);
+        } catch (err) {}
+      });
+    </script>
+  </body>
+</html>

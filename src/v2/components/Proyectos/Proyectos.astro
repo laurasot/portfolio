@@ -1,0 +1,45 @@
+---
+import type { PageData } from '../../data/types';
+import styles from './Proyectos.module.css';
+
+interface Props {
+  data: PageData;
+}
+
+const { data } = Astro.props;
+---
+
+<main class={styles.page}>
+  <a class={styles.back} href={data.home}>{data.ui.projectsBack}</a>
+  <h1 class={styles.title}>{data.ui.projectsTitle}</h1>
+  <ul class={styles.list}>
+    {
+      data.projects.map((p) => (
+        <li class={styles.project}>
+          <h2 class={styles.name}>{p.name}</h2>
+          <p class={styles.line}>{p.line}</p>
+          <p class={styles.stack}>{p.stack.join(' · ')}</p>
+          {p.links.length > 0 && (
+            <p class={styles.links}>
+              {p.links.map((l) => (
+                <a href={l.url} target="_blank" rel="noopener noreferrer">
+                  {l.label} →
+                </a>
+              ))}
+            </p>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+  <h2 class={styles.contact}>{data.ui.contact}</h2>
+  <p class={styles.links}>
+    {
+      data.contactLinks.map((l) => (
+        <a href={l.href} target={l.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer">
+          {l.label}
+        </a>
+      ))
+    }
+  </p>
+</main>
