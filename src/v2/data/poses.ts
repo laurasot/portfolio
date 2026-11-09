@@ -6,7 +6,8 @@ import duda from '../assets/poses/duda.png';
 import miraCinta from '../assets/poses/mira-cinta.png';
 import giro from '../assets/poses/giro.png';
 
-/** 'crop' = PNG provisionales recortados por CSS; 'cutout' = recortes transparentes definitivos. */
+/** 'crop' = PNG provisionales recortados por CSS; 'cutout' = recortes transparentes definitivos.
+ * Cambiar la constante basta: Sala.module.css trae el bloque [data-render="cutout"]. */
 export const RENDER: 'crop' | 'cutout' = 'crop';
 
 export const POSES: Record<PoseId, ImageMetadata> = {

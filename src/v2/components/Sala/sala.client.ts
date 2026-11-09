@@ -56,10 +56,23 @@ function save() {
   }
 }
 
+// Desktop: escenario 1440x900 con fit() y cámara con translate (mismo cálculo que el animatic).
+// <1024: fluido, solo scale con origen en la estatua y cámara 115/110/106 %.
+const wide = matchMedia('(min-width:1024px)');
+const tablet = matchMedia('(min-width:768px)');
+const stage = $('[data-stage]');
+
+function fit() {
+  const s = wide.matches ? Math.min(innerWidth / 1440, innerHeight / 900) : '';
+  stage.style.setProperty('--fit', String(s));
+}
+
 function setCamera(k: number, instant: boolean) {
+  const e = 1 + (k - 1) * (wide.matches ? 1 : tablet.matches ? 10 / 15 : 6 / 15);
   if (instant) cam.style.transition = 'none';
-  // Mismo cálculo que el animatic (1440x900), en % para que escale con el escenario.
-  cam.style.transform = `translate(${-(k - 1) * 12.5}%, ${-(k - 1) * 47.78}%) scale(${k})`;
+  // Translate en % para que escale con el escenario (12,5 % = 180 px, 47,78 % = 430 px).
+  const move = wide.matches ? `translate(${-(e - 1) * 12.5}%, ${-(e - 1) * 47.78}%) ` : '';
+  cam.style.transform = `${move}scale(${e})`;
   if (instant) {
     void cam.offsetWidth;
     cam.style.transition = '';
@@ -115,7 +128,8 @@ function enter(id: string, instant = false) {
   lastK = step.camera;
 
   // Estatua: crossfade, inclinación/espejo y giro único (squash).
-  const turning = step.pose === 'giro' && !layers.some((l) => l.dataset.pose === 'giro' && l.dataset.on);
+  const turning =
+    step.pose === 'giro' && !layers.some((l) => l.dataset.pose === 'giro' && l.dataset.on);
   const tf = `rotate(${step.tilt ?? 0}deg)${step.flip ? ' scaleX(-1)' : ''}`;
   for (const l of layers) {
     const on = l.dataset.pose === step.pose;
@@ -208,5 +222,10 @@ document.addEventListener('keydown', (e) => {
     advance();
 });
 
+addEventListener('resize', () => {
+  fit();
+  setCamera(lastK, true);
+});
+fit();
 state = load();
 enter(state.step, true);

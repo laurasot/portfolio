@@ -105,16 +105,16 @@ Depende de PR 4 (puede ir en paralelo con 4 si se acuerda el contrato de clases/
 
 > Nota de PR 2: los pasos compartidos del final (`ya-se`, `quien`, `giro`) traen `ui.exit`; en `html[data-mode="elegancia"]` el atajo y la sospecha se ocultan por CSS.
 
-- [ ] 5.1 Escenario y estatua
+- [x] 5.1 Escenario y estatua
   - Archivos: `src/v2/components/Sala/Sala.module.css` (espacio 1440×900, `#cam` con `transform-origin: 1040px 340px`, translate+scale con transición 1600 ms, suelo partido con parallax, 6 capas con crossfade 800 ms, recorte CSS + multiply + filter + máscara, `.breathe` 6 s, giro 2 s + squash, halo, post-it/placa con corte seco; solo `transform`/`opacity` animados).
   - Aceptación: se ve igual que `design/v2/animatic.html` lado a lado a 1440×900. Specs v2-estatua R1–R9.
-- [ ] 5.2 Imágenes: modo `cutout`
+- [x] 5.2 Imágenes: modo `cutout`
   - Archivos: `Sala.module.css` (bloque `[data-render="cutout"]`: `background-size: contain; background-position: bottom`), `poses.ts` (documentar constante).
   - Aceptación: cambiar `RENDER` a `'cutout'` no requiere tocar el runtime y la estatua sigue visible. Spec v2-estatua R10.
-- [ ] 5.3 Tema hueso y tipografía
+- [x] 5.3 Tema hueso y tipografía
   - Archivos: `tokens.css`/`Sala.module.css` (`html[data-mode="elegancia"]` hueso, tamaños de voz 44/36/28).
   - Aceptación: en modo Elegancia el fondo pasa a hueso; contraste de `--suave` ≥4,5:1 en blanco y hueso (medido). Specs v2-preguntas R2, v2-responsive-a11y R2.
-- [ ] 5.4 Responsive fluido
+- [x] 5.4 Responsive fluido
   - Archivos: `Sala.module.css`, `sala.client.ts` (`matchMedia('(min-width:1024px)')`, `fit()` solo en desktop; en <1024 grid fluido con `scale(k_efectiva)` y origen en la estatua; estatua 100/85/62 %, cámara 115/110/106 %; opciones apiladas con alto ≥44 px en móvil; bloques con scroll interno).
   - Aceptación: revisar a 1440, 768 y 390 px: texto nunca sobre la estatua, sin recorte de texto, objetivos ≥44 px. Specs v2-responsive-a11y R1, R2, R3, v2-experiencia R4.
 

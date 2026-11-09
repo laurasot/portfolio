@@ -28,23 +28,30 @@ const layers = await Promise.all(
 
 <main class={styles.sala} data-render={RENDER}>
   <h1 class={styles.hidden}>{page.name}</h1>
-  <div class={styles.stage}>
+  <div class={styles.stage} data-stage>
     <div id="cam" class={styles.cam}>
-      {
-        layers.map((l) => (
-          <div class={styles.pose} data-pose={l.id} style={`--img:url(${l.url})`} />
-        ))
-      }
-      <p class={styles.postit} data-postit hidden></p>
-      <p class={styles.plaque} data-plaque hidden></p>
+      <div class={styles.statue}>
+        <i class={styles.light}></i>
+        <i class={styles.floorL}></i>
+        <i class={styles.floorR}></i>
+        <div class={styles.breathe}>
+          {
+            layers.map((l) => (
+              <div class={styles.pose} data-pose={l.id} style={`--img:url(${l.url})`} />
+            ))
+          }
+        </div>
+        <p class={styles.plaque} data-plaque hidden></p>
+        <p class={styles.postit} data-postit hidden></p>
+      </div>
     </div>
     <div id="text" class={styles.text} aria-live="polite"></div>
     <div data-sospecha></div>
+    <nav class={styles.exits} data-exits hidden>
+      {script.ui.exits.map((e) => <a href={e.href}>{e.label}</a>)}
+    </nav>
+    <a class={styles.shortcut} data-shortcut href={projectsHref} hidden>{script.ui.exit}</a>
   </div>
-  <nav class={styles.exits} data-exits hidden>
-    {script.ui.exits.map((e) => <a href={e.href}>{e.label}</a>)}
-  </nav>
-  <a class={styles.shortcut} data-shortcut href={projectsHref} hidden>{script.ui.exit}</a>
 
   <template id="t-line"><p class={styles.line}></p></template>
   <template id="t-option"><button type="button" class={styles.option}></button></template>
