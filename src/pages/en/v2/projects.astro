@@ -1,0 +1,13 @@
+---
+import V2Layout from '../../../v2/layouts/V2Layout.astro';
+import Proyectos from '../../../v2/components/Proyectos/Proyectos.astro';
+import data from '../../../v2/data/projects.en';
+---
+
+<V2Layout
+  lang="en"
+  title={`${data.ui.projectsTitle} · ${data.name}`}
+  alt={{ lang: 'es', href: '/v2/proyectos', label: data.ui.langLabel }}
+>
+  <Proyectos data={data} />
+</V2Layout>

@@ -1,0 +1,69 @@
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 72px 24px 96px;
+}
+
+.back {
+  color: var(--suave);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: 44px;
+  margin: 32px 0;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.project {
+  padding: 24px 0;
+  border-top: 1px solid var(--linea);
+}
+
+.name {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 28px;
+  margin: 0 0 8px;
+}
+
+.line {
+  margin: 0 0 8px;
+}
+
+.stack {
+  margin: 0 0 8px;
+  color: var(--suave);
+  font-size: 14px;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 0;
+  font-size: 14px;
+}
+
+.links a {
+  color: var(--tinta);
+  display: inline-block;
+  padding: 10px 0;
+}
+
+.contact {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 28px;
+  margin: 40px 0 8px;
+  padding-top: 24px;
+  border-top: 1px solid var(--linea);
+}

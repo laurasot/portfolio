@@ -1,0 +1,50 @@
+:root {
+  --fondo: #fff;
+  --hueso: #f4f0e8;
+  --tinta: #1c1b19;
+  --suave: #8c8982;
+  --linea: #e4e1db;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: Inter, system-ui, sans-serif;
+  /* tiempos del animatic (el runtime los lee de aquí) */
+  --cam: 1600ms;
+  --pose: 800ms;
+  --fade: 600ms;
+  --linea-gap: 1200ms;
+  --giro: 2000ms;
+  --ease: cubic-bezier(0.45, 0.05, 0.25, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --cam: 0ms;
+    --pose: 0ms;
+    --fade: 0ms;
+    --giro: 0ms;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: var(--font-sans);
+}
+
+html[data-mode='elegancia'] body {
+  background: var(--hueso);
+}
+
+.v2-lang {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  font-size: 13px;
+  color: var(--suave);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+}
