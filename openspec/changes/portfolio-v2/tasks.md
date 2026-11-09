@@ -41,19 +41,19 @@ Resultado: `/v2`, `/en/v2`, `/v2/proyectos`, `/en/v2/projects` existen y compila
 
 Depende de PR 1. Resultado: el guion completo en español (con TODOs) se valida durante el build; aún no se ve en pantalla.
 
-- [ ] 2.1 Motor puro
+- [x] 2.1 Motor puro
   - Archivos: `src/v2/components/Sala/engine.ts` (`createState`, `resolve(next, state)`; sin DOM; incluye un bloque de asserts de autocomprobación para `resolve` con `Next` simple y `by:'mode'`/`by:'q2'`).
   - Aceptación: los asserts corren en build (importados por `validate.ts`) y no fallan; una ruta rota los hace fallar. Spec v2-preguntas R6 (determinismo), v2-experiencia R7.
-- [ ] 2.2 Validación del grafo y placeholders
+- [x] 2.2 Validación del grafo y placeholders
   - Archivos: `src/v2/data/validate.ts` (falla siempre si: `start`/`next`/`to` inexistentes, pasos inalcanzables, `by` sin todas las ramas; busca `/\[\[TODO/` y avisa con conteo + ids; con `V2_STRICT=1` lanza error).
   - Aceptación: `npm run build` imprime aviso con conteo; `V2_STRICT=1 npm run build` falla mientras haya TODOs. Spec v2-aislamiento R4 (placeholders detectables), R3 (build).
-- [ ] 2.3 Guion `es.ts` — escenas 1–2 y Q1/Q2
+- [x] 2.3 Guion `es.ts` — escenas 1–2 y Q1/Q2
   - Archivos: `src/v2/data/es.ts` (parte 1: portada, escena de entrada, Q1 con 4 modos, Q2 con 4 respuestas, "Ideas otra vez" solo Q1=Ideas y Q2=Ideas, Sospechas, atajo `ui.exit`, `ui` completo, notas Hz del animatic).
   - Aceptación: validación pasa; Elegancia no trae `sospecha` ni `ui.exit` en sus pasos; una sola línea por vez (`lines` ordenadas). Specs v2-preguntas R1–R5, v2-experiencia R1, R3, R5.
-- [ ] 2.4 Guion `es.ts` — cierre, ramas por modo, final y salidas
+- [x] 2.4 Guion `es.ts` — cierre, ramas por modo, final y salidas
   - Archivos: `src/v2/data/es.ts` (parte 2: `cierre` con `next:{by:'mode'}`, ramas ideas/resultados/honestidad/elegancia con `blocks` y `[[TODO: …]]`, escena final con `plaque: 'Laura Soto'`, pose `giro`, `ui.exits`).
   - Aceptación: todos los pasos alcanzables desde `start`; el último paso no tiene `next`; las salidas son el sitio/proyectos/contacto. Specs v2-experiencia R1, R6, v2-estatua R6, R7.
-- [ ] 2.5 Llamar a `validate` desde las páginas
+- [x] 2.5 Llamar a `validate` desde las páginas
   - Archivos: `src/pages/v2/index.astro` (importa `es.ts`, llama `validate`).
   - Aceptación: romper un `next` a propósito hace fallar el build (revertir tras comprobar). Spec v2-aislamiento R3, R4.
 
@@ -82,6 +82,8 @@ Depende de PR 2. Resultado: `/v2` y `/en/v2` renderizan el escenario estático (
 
 Depende de PR 3. Resultado: la experiencia funciona (secuencia, opciones, teclado, resume) con estilo aún básico.
 
+> Nota de PR 2: la sospecha vigente debe **mantenerse visible** en los pasos siguientes (p. ej. en `q2`) hasta que otro paso traiga una nueva o el modo Elegancia la quite; los pasos compartidos no la repiten.
+
 - [ ] 4.1 Estado, resume y cortes secos
   - Archivos: `src/v2/components/Sala/sala.client.ts` (lee JSON; `sessionStorage('v2.state')` en try/catch; valida que el id exista, si no empieza de cero; estado válido = sin portada y corte seco; aplica pose/tilt/flip/plaque/postit/light/ui/sospecha/`dataset.mode`).
   - Aceptación: recargar a mitad retoma ese paso; estado con id inexistente cae al inicio; con `sessionStorage` bloqueado no hay error. Specs v2-proyectos R4 (resume, supuesto 1), v2-estatua R2, R4, R7.
@@ -100,6 +102,8 @@ Depende de PR 3. Resultado: la experiencia funciona (secuencia, opciones, teclad
 ## PR 5 — Estilos: estatua, cámara, responsive, tema hueso (~380 líneas)
 
 Depende de PR 4 (puede ir en paralelo con 4 si se acuerda el contrato de clases/`data-*` de 3.2).
+
+> Nota de PR 2: los pasos compartidos del final (`ya-se`, `quien`, `giro`) traen `ui.exit`; en `html[data-mode="elegancia"]` el atajo y la sospecha se ocultan por CSS.
 
 - [ ] 5.1 Escenario y estatua
   - Archivos: `src/v2/components/Sala/Sala.module.css` (espacio 1440×900, `#cam` con `transform-origin: 1040px 340px`, translate+scale con transición 1600 ms, suelo partido con parallax, 6 capas con crossfade 800 ms, recorte CSS + multiply + filter + máscara, `.breathe` 6 s, giro 2 s + squash, halo, post-it/placa con corte seco; solo `transform`/`opacity` animados).
