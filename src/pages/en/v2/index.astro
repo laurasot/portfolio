@@ -1,11 +1,14 @@
 ---
 import V2Layout from '../../../v2/layouts/V2Layout.astro';
+import Sala from '../../../v2/components/Sala/Sala.astro';
 import data from '../../../v2/data/projects.en';
+import script from '../../../v2/data/en';
+import es from '../../../v2/data/es';
+import { validate } from '../../../v2/data/validate';
+
+validate(script, es);
 ---
 
 <V2Layout lang="en" title={data.name} alt={{ lang: 'es', href: '/v2', label: data.ui.langLabel }}>
-  <main>
-    <h1>{data.name}</h1>
-    <a href={data.projectsHref}>{data.ui.exit}</a>
-  </main>
+  <Sala lang="en" />
 </V2Layout>

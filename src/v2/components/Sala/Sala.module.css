@@ -1,0 +1,17 @@
+/* Solo las clases que usa Sala.astro; el diseño llega en PR 5. */
+.sala {
+  display: block;
+}
+
+.hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.pose {
+  background-image: var(--img);
+}

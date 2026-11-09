@@ -63,16 +63,16 @@ Depende de PR 1. Resultado: el guion completo en español (con TODOs) se valida 
 
 Depende de PR 2. Resultado: `/v2` y `/en/v2` renderizan el escenario estático (poses, plantillas, JSON, noscript) sin animación.
 
-- [ ] 3.1 Guion `en.ts`
+- [x] 3.1 Guion `en.ts`
   - Archivos: `src/v2/data/en.ts` (misma forma e ids que `es.ts`; texto en inglés; TODOs donde no haya contenido de Laura).
   - Aceptación: `validate(en)` pasa; mismos ids de pasos que `es.ts` (comprobación en `validate.ts` o assert de paridad de claves). Spec v2-i18n R1, R2.
-- [ ] 3.2 `Sala.astro`: escenario, plantillas y JSON
+- [x] 3.2 `Sala.astro`: escenario, plantillas y JSON
   - Archivos: `src/v2/components/Sala/Sala.astro` (frontmatter con `getImage` webp 1536 por pose; `#cam` con 6 capas `--img:url(...)`; `<template>` para línea, opción, post-it, placa, bloque, sospecha; `<script type="application/json" id="v2-script">`; `main`, `h1` oculto, `#text aria-live="polite"`, `nav` de salidas; `data-render` según `RENDER`), `src/v2/components/Sala/Sala.module.css` (mínimo: clases referenciadas, sin diseño).
   - Aceptación: en `/v2` y `/en/v2` el HTML contiene las 6 capas, el JSON de ese idioma y ningún texto escrito en el componente (todo viene del guion). Specs v2-estatua R1, R9 (solo transform/opacity), v2-i18n R2, v2-responsive-a11y R5.
-- [ ] 3.3 `<noscript>`
+- [x] 3.3 `<noscript>`
   - Archivos: `Sala.astro` (usa `ui.noscript` + `projects`).
   - Aceptación: con JS desactivado se ve quién es, lista de proyectos, enlace a proyectos, contacto. Spec v2-responsive-a11y R7.
-- [ ] 3.4 Conectar las páginas
+- [x] 3.4 Conectar las páginas
   - Archivos: `src/pages/v2/index.astro`, `src/pages/en/v2/index.astro` (reemplazan el stub por `<Sala lang=... />`).
   - Aceptación: `npm run build` verde; ambas rutas muestran el escenario; v1 sin cambios. Specs v2-aislamiento R1, v2-i18n R3.
 
