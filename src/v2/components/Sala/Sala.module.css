@@ -150,6 +150,29 @@
   .pose[data-turn] {
     animation: none;
   }
+
+  /* Cortes secos: ni cámara, ni fundidos, ni cruces de pose. */
+  .sala * {
+    transition: none !important;
+  }
+}
+
+/* Portada de sonido: cubre el escenario hasta elegir. */
+.gate {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 40px;
+  padding: 24px;
+  background: var(--bg);
+}
+
+.gate p {
+  margin: 0;
+  font: 300 var(--voz) / 1.25 var(--font-serif);
 }
 
 .plaque,

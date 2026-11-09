@@ -51,6 +51,11 @@ const layers = await Promise.all(
       {script.ui.exits.map((e) => <a href={e.href}>{e.label}</a>)}
     </nav>
     <a class={styles.shortcut} data-shortcut href={projectsHref} hidden>{script.ui.exit}</a>
+    <div class={styles.gate} data-gate role="group" aria-labelledby="v2-gate-q" hidden>
+      <p id="v2-gate-q">{script.ui.soundPrompt}</p>
+      <button type="button" class={styles.option} data-sound="1">{script.ui.yes}</button>
+      <button type="button" class={styles.option} data-sound="0">{script.ui.no}</button>
+    </div>
   </div>
 
   <template id="t-line"><p class={styles.line}></p></template>
