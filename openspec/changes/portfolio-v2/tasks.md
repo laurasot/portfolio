@@ -84,16 +84,16 @@ Depende de PR 3. Resultado: la experiencia funciona (secuencia, opciones, teclad
 
 > Nota de PR 2: la sospecha vigente debe **mantenerse visible** en los pasos siguientes (p. ej. en `q2`) hasta que otro paso traiga una nueva o el modo Elegancia la quite; los pasos compartidos no la repiten.
 
-- [ ] 4.1 Estado, resume y cortes secos
+- [x] 4.1 Estado, resume y cortes secos
   - Archivos: `src/v2/components/Sala/sala.client.ts` (lee JSON; `sessionStorage('v2.state')` en try/catch; valida que el id exista, si no empieza de cero; estado válido = sin portada y corte seco; aplica pose/tilt/flip/plaque/postit/light/ui/sospecha/`dataset.mode`).
   - Aceptación: recargar a mitad retoma ese paso; estado con id inexistente cae al inicio; con `sessionStorage` bloqueado no hay error. Specs v2-proyectos R4 (resume, supuesto 1), v2-estatua R2, R4, R7.
-- [ ] 4.2 Secuencia cámara -> líneas -> opciones
+- [x] 4.2 Secuencia cámara -> líneas -> opciones
   - Archivos: `sala.client.ts` (objeto `T` único; cámara efectiva con factor por breakpoint y espera 1600 ms; líneas añadidas al DOM cada 1200 ms con fade 600 ms; opciones esperan; elegir marca `.pick`, aplica `set`, 1200 ms, `enter(resolve(to))`; `blocks`; `hold`; paso final deja las salidas; giro único con squash).
   - Aceptación: el recorrido Q1->Q2->cierre->rama->final funciona en los 4 modos; texto solo sobre Laura (zona propia). Specs v2-experiencia R2, R3, R4, R6, v2-preguntas R1–R4, v2-estatua R3, R6, R8.
-- [ ] 4.3 Teclado y foco
+- [x] 4.3 Teclado y foco
   - Archivos: `sala.client.ts` (teclas 1–4 eligen; Enter/→ salta `hold`; foco al primer botón al aparecer opciones sin robar el foco existente).
   - Aceptación: recorrer la experiencia solo con teclado; foco visible. Spec v2-responsive-a11y R4, R5.
-- [ ] 4.4 Atajo y vuelta desde proyectos
+- [x] 4.4 Atajo y vuelta desde proyectos
   - Archivos: `sala.client.ts` (el atajo conserva el estado en `sessionStorage` antes de navegar), `Proyectos.astro` si hace falta.
   - Aceptación: en medio de la experiencia, atajo -> proyectos -> "← Volver a la sala" retoma el paso; abrir `/v2/proyectos` directo y pulsar volver empieza de cero. Specs v2-proyectos R4, v2-experiencia R5.
 

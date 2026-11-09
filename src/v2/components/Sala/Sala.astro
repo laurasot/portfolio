@@ -35,15 +35,16 @@ const layers = await Promise.all(
           <div class={styles.pose} data-pose={l.id} style={`--img:url(${l.url})`} />
         ))
       }
-      <p class={styles.postit} hidden></p>
-      <p class={styles.plaque} hidden></p>
+      <p class={styles.postit} data-postit hidden></p>
+      <p class={styles.plaque} data-plaque hidden></p>
     </div>
     <div id="text" class={styles.text} aria-live="polite"></div>
+    <div data-sospecha></div>
   </div>
-  <nav class={styles.exits} hidden>
+  <nav class={styles.exits} data-exits hidden>
     {script.ui.exits.map((e) => <a href={e.href}>{e.label}</a>)}
   </nav>
-  <a class={styles.shortcut} href={projectsHref} hidden>{script.ui.exit}</a>
+  <a class={styles.shortcut} data-shortcut href={projectsHref} hidden>{script.ui.exit}</a>
 
   <template id="t-line"><p class={styles.line}></p></template>
   <template id="t-option"><button type="button" class={styles.option}></button></template>
@@ -78,3 +79,7 @@ const layers = await Promise.all(
     </ul>
   </noscript>
 </main>
+
+<script>
+  import './sala.client';
+</script>
