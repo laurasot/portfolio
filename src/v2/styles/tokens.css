@@ -2,7 +2,7 @@
   --fondo: #fff;
   --hueso: #f4f0e8;
   --tinta: #1c1b19;
-  --suave: #8c8982;
+  --suave: #6f6c66; /* #8c8982 del animatic daba 3,49:1 en blanco y 3,07:1 en hueso */
   --linea: #e4e1db;
   --font-serif: 'Cormorant Garamond', Georgia, serif;
   --font-sans: Inter, system-ui, sans-serif;
@@ -41,8 +41,9 @@ html[data-mode='elegancia'] body {
 
 .v2-lang {
   position: fixed;
-  top: 16px;
-  right: 20px;
+  top: 4px;
+  right: 8px;
+  padding: 12px;
   font-size: 13px;
   color: var(--suave);
   letter-spacing: 0.08em;

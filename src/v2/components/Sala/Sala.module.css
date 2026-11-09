@@ -1,6 +1,18 @@
-/* Solo lo funcional para que el runtime se use; el diseño llega en PR 5. */
+/* Móvil primero (fluido); >=768 tablet; >=1024 escenario fijo 1440x900 escalado con fit(). */
 .sala {
-  display: block;
+  --u: 0.62; /* escala de la estatua: 62 / 85 / 100 % */
+  --voz: 28px;
+  --op: 22px;
+  --bg: var(--fondo);
+  min-height: 100dvh;
+}
+
+:global(html[data-mode='elegancia']) .sala {
+  --bg: var(--hueso);
+}
+
+.sala [hidden] {
+  display: none !important;
 }
 
 .hidden {
@@ -14,36 +26,109 @@
 
 .stage {
   position: relative;
-  max-width: 1440px;
-  aspect-ratio: 1440 / 900;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
   overflow: hidden;
 }
 
+/* Cámara: el runtime pone transform; el origen es la esquina superior de la estatua. */
 .cam {
-  position: absolute;
-  inset: 0;
-  transform-origin: 72.22% 37.78%;
-  transition: transform var(--v2-cam, 1600ms) ease;
+  position: relative;
+  height: calc(530px * var(--u) + 90px);
+  transform-origin: calc(50% - 110px * var(--u)) 30px;
+  transition: transform var(--cam) var(--ease);
 }
 
+.statue {
+  position: absolute;
+  left: calc(50% - 110px * var(--u));
+  top: 30px;
+  width: calc(220px * var(--u));
+  height: calc(530px * var(--u));
+  background: var(--bg);
+}
+
+/* Suelo partido alrededor del pedestal; viaja con la cámara. */
+.floorL,
+.floorR {
+  position: absolute;
+  top: calc(440px * var(--u));
+  width: 300vw;
+  height: 1px;
+  background: var(--linea);
+  opacity: 0.7;
+}
+
+.floorL {
+  right: calc(100% - 30px * var(--u));
+}
+
+.floorR {
+  left: calc(122px * var(--u));
+}
+
+.light {
+  position: absolute;
+  left: calc(-240px * var(--u));
+  top: calc(-60px * var(--u));
+  width: calc(700px * var(--u));
+  height: calc(700px * var(--u));
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 230, 191, 0.55), rgba(255, 230, 191, 0));
+  opacity: 0;
+  transition: opacity 1500ms ease;
+  pointer-events: none;
+}
+
+.cam[data-light='1'] .light {
+  opacity: 1;
+}
+
+/* multiply aquí (no en cada pose) para que mezcle con el fondo de .statue también en hueso. */
+.breathe {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 100%;
+  mix-blend-mode: multiply;
+  animation: breathe 6s ease-in-out infinite alternate;
+}
+
+@keyframes breathe {
+  to {
+    transform: scale(1.004);
+  }
+}
+
+/* shortcut: recorte CSS de PNG con fondo hueso-blanco; los recortes reales (cutout) lo sustituyen. */
 .pose {
   position: absolute;
   inset: 0;
+  transform-origin: 50% 100%;
   background-image: var(--img);
   background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
+  background-size: calc(1536px * var(--u)) calc(1024px * var(--u));
+  background-position: calc(-990px * var(--u)) calc(-380px * var(--u));
+  filter: brightness(1.07) contrast(1.05);
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent),
+    linear-gradient(180deg, transparent, #000 4%, #000 94%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
   opacity: 0;
-  transition: opacity 800ms ease;
+  transition:
+    opacity var(--pose) ease,
+    transform var(--pose) var(--ease);
 }
 
 .pose[data-on] {
   opacity: 1;
 }
 
+/* El giro es único: crossfade lento y squash horizontal. */
 .pose[data-turn] {
-  animation: squash 2000ms ease;
+  transition-duration: var(--giro);
+  animation: squash var(--giro) var(--ease);
 }
 
 @keyframes squash {
@@ -52,38 +137,127 @@
   }
 }
 
-.text {
+.sala[data-render='cutout'] .pose {
+  background-size: contain;
+  background-position: bottom;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .breathe,
+  .pose[data-turn] {
+    animation: none;
+  }
+}
+
+.plaque,
+.postit {
   position: absolute;
-  left: 11%;
-  top: var(--top, 36.7%);
-  width: 55%;
+  margin: 0;
 }
 
-.line,
-.option,
-.block {
+.plaque {
+  left: 50%;
+  top: 100%;
+  margin-top: 8px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: var(--bg);
+  border: 1px solid var(--linea);
+  padding: 8px 12px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.postit {
+  left: calc(40px * var(--u));
+  top: calc(380px * var(--u));
+  width: calc(116px * var(--u));
+  min-height: calc(96px * var(--u));
+  padding: calc(12px * var(--u));
+  transform: rotate(-4deg);
+  background: #fff6d1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  font: italic 400 max(13px, calc(17px * var(--u))) / 1.1 var(--font-serif);
+}
+
+/* Texto: en flujo bajo la estatua; nunca encima de ella. */
+.text {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px 24px 24px;
+}
+
+.line {
+  margin: 0 0 16px;
+  font: 300 var(--voz) / 1.25 var(--font-serif);
+  letter-spacing: -0.01em;
   opacity: 0;
-  transition: opacity 600ms ease;
-}
-
-.line[data-in],
-.option,
-.block {
-  font-size: clamp(18px, 3vw, 44px);
+  transform: translateY(6px);
+  transition:
+    opacity var(--fade) ease,
+    transform var(--fade) ease;
 }
 
 .line[data-in] {
   opacity: 1;
+  transform: none;
 }
 
 .line[data-dim] {
   opacity: 0.35;
 }
 
-/* Opciones y bloques aparecen cuando el contenedor recibe data-in. */
-[data-in] > .option,
-[data-in] > .block {
+/* Contenedores de opciones y bloques: aparecen al recibir data-in. */
+.text > div {
+  opacity: 0;
+  transition: opacity var(--fade) ease;
+}
+
+.text > div[data-in] {
   opacity: 1;
+}
+
+.text > div:has(> .option) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 12px;
+}
+
+.text > div:has(> .block) {
+  display: grid;
+  gap: 28px;
+  padding-top: 24px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 0 6px;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  color: var(--tinta);
+  font: 400 var(--op) / 1.2 var(--font-serif);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    opacity 400ms ease,
+    border-color 200ms;
+}
+
+.option:hover {
+  border-bottom-color: var(--suave);
+}
+
+.option:focus-visible {
+  outline: 2px solid var(--tinta);
+  outline-offset: 4px;
 }
 
 [data-chosen] .option {
@@ -92,16 +266,206 @@
 
 [data-chosen] .option[data-pick] {
   opacity: 1;
+  border-bottom-color: var(--suave);
 }
 
-.option {
-  background: none;
-  border: 0;
-  margin-right: 2rem;
-  cursor: pointer;
+.block {
+  border-left: 1px solid var(--linea);
+  padding-left: 20px;
 }
 
-.option:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 4px;
+.eyebrow,
+.sospechaFoot,
+.exits,
+.shortcut {
+  margin: 0;
+  font: 500 11px / 1.4 var(--font-sans);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--suave);
+}
+
+.blockTitle {
+  margin: 6px 0 0;
+  font: 400 var(--op) / 1.2 var(--font-serif);
+}
+
+.blockBody {
+  max-width: 560px;
+  margin: 6px 0 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--suave);
+}
+
+.stage [data-sospecha] {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.sospecha {
+  max-width: 300px;
+}
+
+.sospechaText {
+  margin: 4px 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.exits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 24px;
+  padding: 8px 24px 32px;
+}
+
+.exits a,
+.shortcut {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.exits a {
+  color: var(--tinta);
+  text-decoration: none;
+}
+
+.exits a:hover,
+.shortcut:hover {
+  text-decoration: underline;
+}
+
+.exits a:focus-visible,
+.shortcut:focus-visible {
+  outline: 2px solid var(--tinta);
+  outline-offset: 2px;
+}
+
+.shortcut {
+  order: -1;
+  align-self: flex-start;
+  padding: 0 24px;
+  text-decoration: none;
+}
+
+/* Elegancia: sin atajo ni sospecha. */
+:global(html[data-mode='elegancia']) .sala :is([data-shortcut], [data-sospecha]) {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .sala {
+    --u: 0.85;
+    --voz: 36px;
+    --op: 26px;
+  }
+
+  .plaque {
+    left: auto;
+    right: calc(100% + 24px * var(--u));
+    top: auto;
+    bottom: calc(30px * var(--u));
+    margin: 0;
+    transform: none;
+  }
+
+  .text {
+    padding: 16px 48px 24px;
+  }
+
+  .text > div:has(> .option) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0 40px;
+  }
+
+  .stage [data-sospecha],
+  .exits {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .shortcut {
+    padding: 0 48px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sala {
+    --u: 1;
+    --voz: 44px;
+    --op: 30px;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .stage {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 1440px;
+    height: 900px;
+    min-height: 0;
+    transform: translate(-50%, -50%) scale(var(--fit, 1));
+  }
+
+  .cam {
+    position: absolute;
+    inset: 0;
+    height: auto;
+    transform-origin: 1040px 340px;
+  }
+
+  .statue {
+    left: 1040px;
+    top: 340px;
+  }
+
+  .text {
+    position: absolute;
+    left: 160px;
+    top: var(--top, 36.7%);
+    width: 720px;
+    max-width: none;
+    max-height: calc(100% - var(--top, 36.7%) - 110px);
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+  }
+
+  .text > div:has(> .option) {
+    gap: 0 56px;
+    padding-top: 28px;
+  }
+
+  .stage [data-sospecha] {
+    position: absolute;
+    left: 160px;
+    top: 72px;
+    width: 300px;
+    padding: 0;
+    margin: 0;
+  }
+
+  .exits {
+    position: absolute;
+    left: 160px;
+    top: 800px;
+    gap: 0 32px;
+    padding: 0;
+  }
+
+  .shortcut {
+    position: absolute;
+    right: 160px;
+    top: 72px;
+    min-height: 0;
+    padding: 0;
+  }
 }
