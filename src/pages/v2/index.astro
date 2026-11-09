@@ -1,6 +1,10 @@
 ---
 import V2Layout from '../../v2/layouts/V2Layout.astro';
 import data from '../../v2/data/projects.es';
+import script from '../../v2/data/es';
+import { validate } from '../../v2/data/validate';
+
+validate(script);
 ---
 
 <V2Layout
