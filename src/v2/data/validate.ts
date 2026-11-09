@@ -12,9 +12,18 @@ const targets = (n?: Next): string[] =>
   !n ? [] : typeof n === 'string' ? [n] : Object.values(n.to);
 
 /** Rompe el build si el grafo está roto; avisa (o falla con V2_STRICT=1) si quedan [[TODO. */
-export function validate(script: Script): void {
+export function validate(script: Script, ref?: Script): void {
   const errors: string[] = [];
   const { steps, start } = script;
+  // Paridad de idiomas: mismos ids de pasos que el guion de referencia.
+  if (ref) {
+    const a = Object.keys(steps);
+    const b = Object.keys(ref.steps);
+    for (const k of a.filter((k) => !b.includes(k)))
+      errors.push(`paso "${k}" no existe en ${ref.lang}`);
+    for (const k of b.filter((k) => !a.includes(k)))
+      errors.push(`falta el paso "${k}" de ${ref.lang}`);
+  }
   if (!steps[start]) errors.push(`start "${start}" no existe`);
 
   const edges = (id: string) =>

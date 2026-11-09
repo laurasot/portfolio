@@ -1,0 +1,80 @@
+---
+import { getImage } from 'astro:assets';
+import { POSES, RENDER } from '../../data/poses';
+import type { PoseId } from '../../data/types';
+import es from '../../data/es';
+import en from '../../data/en';
+import pagesEs from '../../data/projects.es';
+import pagesEn from '../../data/projects.en';
+import styles from './Sala.module.css';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+const script = lang === 'en' ? en : es;
+const page = lang === 'en' ? pagesEn : pagesEs;
+const projectsHref = page.projectsHref;
+
+// Mismo ancho para todas: el recorte CSS depende de las proporciones.
+const layers = await Promise.all(
+  (Object.keys(POSES) as PoseId[]).map(async (id) => ({
+    id,
+    url: (await getImage({ src: POSES[id], format: 'webp', width: 1536 })).src,
+  })),
+);
+---
+
+<main class={styles.sala} data-render={RENDER}>
+  <h1 class={styles.hidden}>{page.name}</h1>
+  <div class={styles.stage}>
+    <div id="cam" class={styles.cam}>
+      {
+        layers.map((l) => (
+          <div class={styles.pose} data-pose={l.id} style={`--img:url(${l.url})`} />
+        ))
+      }
+      <p class={styles.postit} hidden></p>
+      <p class={styles.plaque} hidden></p>
+    </div>
+    <div id="text" class={styles.text} aria-live="polite"></div>
+  </div>
+  <nav class={styles.exits} hidden>
+    {script.ui.exits.map((e) => <a href={e.href}>{e.label}</a>)}
+  </nav>
+  <a class={styles.shortcut} href={projectsHref} hidden>{script.ui.exit}</a>
+
+  <template id="t-line"><p class={styles.line}></p></template>
+  <template id="t-option"><button type="button" class={styles.option}></button></template>
+  <template id="t-postit"><p class={styles.postit}></p></template>
+  <template id="t-plaque"><p class={styles.plaque}></p></template>
+  <template id="t-block">
+    <section class={styles.block}>
+      <p class={styles.eyebrow}></p>
+      <h2 class={styles.blockTitle}></h2>
+      <p class={styles.blockBody}></p>
+    </section>
+  </template>
+  <template id="t-sospecha">
+    <aside class={styles.sospecha}>
+      <p class={styles.eyebrow}></p>
+      <p class={styles.sospechaText}></p>
+      <p class={styles.sospechaFoot}>{script.ui.sospechaFoot}</p>
+    </aside>
+  </template>
+
+  <script type="application/json" id="v2-script" set:html={JSON.stringify(script)} />
+
+  <noscript>
+    <p>{script.ui.noscript.who}</p>
+    <ul>
+      {script.projects.map((p) => <li>{p.name}: {p.line}</li>)}
+    </ul>
+    <p><a href={projectsHref}>{script.ui.projectsTitle} →</a></p>
+    <h2>{script.ui.contact}</h2>
+    <ul>
+      {page.contactLinks.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+    </ul>
+  </noscript>
+</main>
