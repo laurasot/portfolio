@@ -1,0 +1,97 @@
+---
+import { getImage } from 'astro:assets';
+import { POSES, RENDER } from '../../data/poses';
+import type { PoseId } from '../../data/types';
+import es from '../../data/es';
+import en from '../../data/en';
+import pagesEs from '../../data/projects.es';
+import pagesEn from '../../data/projects.en';
+import styles from './Sala.module.css';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+const script = lang === 'en' ? en : es;
+const page = lang === 'en' ? pagesEn : pagesEs;
+const projectsHref = page.projectsHref;
+
+// Mismo ancho para todas: el recorte CSS depende de las proporciones.
+const layers = await Promise.all(
+  (Object.keys(POSES) as PoseId[]).map(async (id) => ({
+    id,
+    url: (await getImage({ src: POSES[id], format: 'webp', width: 1536 })).src,
+  })),
+);
+---
+
+<main class={styles.sala} data-render={RENDER}>
+  <h1 class={styles.hidden}>{page.name}</h1>
+  <div class={styles.stage} data-stage>
+    <div id="cam" class={styles.cam}>
+      <div class={styles.statue}>
+        <i class={styles.light}></i>
+        <i class={styles.floorL}></i>
+        <i class={styles.floorR}></i>
+        <div class={styles.breathe}>
+          {
+            layers.map((l) => (
+              <div class={styles.pose} data-pose={l.id} style={`--img:url(${l.url})`} />
+            ))
+          }
+        </div>
+        <p class={styles.plaque} data-plaque hidden></p>
+        <p class={styles.postit} data-postit hidden></p>
+      </div>
+    </div>
+    <div id="text" class={styles.text} aria-live="polite"></div>
+    <div data-sospecha></div>
+    <nav class={styles.exits} data-exits hidden>
+      {script.ui.exits.map((e) => <a href={e.href}>{e.label}</a>)}
+    </nav>
+    <a class={styles.shortcut} data-shortcut href={projectsHref} hidden>{script.ui.exit}</a>
+    <div class={styles.gate} data-gate role="group" aria-labelledby="v2-gate-q" hidden>
+      <p id="v2-gate-q">{script.ui.soundPrompt}</p>
+      <button type="button" class={styles.option} data-sound="1">{script.ui.yes}</button>
+      <button type="button" class={styles.option} data-sound="0">{script.ui.no}</button>
+    </div>
+  </div>
+
+  <template id="t-line"><p class={styles.line}></p></template>
+  <template id="t-option"><button type="button" class={styles.option}></button></template>
+  <template id="t-postit"><p class={styles.postit}></p></template>
+  <template id="t-plaque"><p class={styles.plaque}></p></template>
+  <template id="t-block">
+    <section class={styles.block}>
+      <p class={styles.eyebrow}></p>
+      <h2 class={styles.blockTitle}></h2>
+      <p class={styles.blockBody}></p>
+    </section>
+  </template>
+  <template id="t-sospecha">
+    <aside class={styles.sospecha}>
+      <p class={styles.eyebrow}></p>
+      <p class={styles.sospechaText}></p>
+      <p class={styles.sospechaFoot}>{script.ui.sospechaFoot}</p>
+    </aside>
+  </template>
+
+  <script type="application/json" id="v2-script" set:html={JSON.stringify(script)} />
+
+  <noscript>
+    <p>{script.ui.noscript.who}</p>
+    <ul>
+      {script.projects.map((p) => <li>{p.name}: {p.line}</li>)}
+    </ul>
+    <p><a href={projectsHref}>{script.ui.projectsTitle} →</a></p>
+    <h2>{script.ui.contact}</h2>
+    <ul>
+      {page.contactLinks.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+    </ul>
+  </noscript>
+</main>
+
+<script>
+  import './sala.client';
+</script>

@@ -41,19 +41,19 @@ Resultado: `/v2`, `/en/v2`, `/v2/proyectos`, `/en/v2/projects` existen y compila
 
 Depende de PR 1. Resultado: el guion completo en español (con TODOs) se valida durante el build; aún no se ve en pantalla.
 
-- [ ] 2.1 Motor puro
+- [x] 2.1 Motor puro
   - Archivos: `src/v2/components/Sala/engine.ts` (`createState`, `resolve(next, state)`; sin DOM; incluye un bloque de asserts de autocomprobación para `resolve` con `Next` simple y `by:'mode'`/`by:'q2'`).
   - Aceptación: los asserts corren en build (importados por `validate.ts`) y no fallan; una ruta rota los hace fallar. Spec v2-preguntas R6 (determinismo), v2-experiencia R7.
-- [ ] 2.2 Validación del grafo y placeholders
+- [x] 2.2 Validación del grafo y placeholders
   - Archivos: `src/v2/data/validate.ts` (falla siempre si: `start`/`next`/`to` inexistentes, pasos inalcanzables, `by` sin todas las ramas; busca `/\[\[TODO/` y avisa con conteo + ids; con `V2_STRICT=1` lanza error).
   - Aceptación: `npm run build` imprime aviso con conteo; `V2_STRICT=1 npm run build` falla mientras haya TODOs. Spec v2-aislamiento R4 (placeholders detectables), R3 (build).
-- [ ] 2.3 Guion `es.ts` — escenas 1–2 y Q1/Q2
+- [x] 2.3 Guion `es.ts` — escenas 1–2 y Q1/Q2
   - Archivos: `src/v2/data/es.ts` (parte 1: portada, escena de entrada, Q1 con 4 modos, Q2 con 4 respuestas, "Ideas otra vez" solo Q1=Ideas y Q2=Ideas, Sospechas, atajo `ui.exit`, `ui` completo, notas Hz del animatic).
   - Aceptación: validación pasa; Elegancia no trae `sospecha` ni `ui.exit` en sus pasos; una sola línea por vez (`lines` ordenadas). Specs v2-preguntas R1–R5, v2-experiencia R1, R3, R5.
-- [ ] 2.4 Guion `es.ts` — cierre, ramas por modo, final y salidas
+- [x] 2.4 Guion `es.ts` — cierre, ramas por modo, final y salidas
   - Archivos: `src/v2/data/es.ts` (parte 2: `cierre` con `next:{by:'mode'}`, ramas ideas/resultados/honestidad/elegancia con `blocks` y `[[TODO: …]]`, escena final con `plaque: 'Laura Soto'`, pose `giro`, `ui.exits`).
   - Aceptación: todos los pasos alcanzables desde `start`; el último paso no tiene `next`; las salidas son el sitio/proyectos/contacto. Specs v2-experiencia R1, R6, v2-estatua R6, R7.
-- [ ] 2.5 Llamar a `validate` desde las páginas
+- [x] 2.5 Llamar a `validate` desde las páginas
   - Archivos: `src/pages/v2/index.astro` (importa `es.ts`, llama `validate`).
   - Aceptación: romper un `next` a propósito hace fallar el build (revertir tras comprobar). Spec v2-aislamiento R3, R4.
 
@@ -63,16 +63,16 @@ Depende de PR 1. Resultado: el guion completo en español (con TODOs) se valida 
 
 Depende de PR 2. Resultado: `/v2` y `/en/v2` renderizan el escenario estático (poses, plantillas, JSON, noscript) sin animación.
 
-- [ ] 3.1 Guion `en.ts`
+- [x] 3.1 Guion `en.ts`
   - Archivos: `src/v2/data/en.ts` (misma forma e ids que `es.ts`; texto en inglés; TODOs donde no haya contenido de Laura).
   - Aceptación: `validate(en)` pasa; mismos ids de pasos que `es.ts` (comprobación en `validate.ts` o assert de paridad de claves). Spec v2-i18n R1, R2.
-- [ ] 3.2 `Sala.astro`: escenario, plantillas y JSON
+- [x] 3.2 `Sala.astro`: escenario, plantillas y JSON
   - Archivos: `src/v2/components/Sala/Sala.astro` (frontmatter con `getImage` webp 1536 por pose; `#cam` con 6 capas `--img:url(...)`; `<template>` para línea, opción, post-it, placa, bloque, sospecha; `<script type="application/json" id="v2-script">`; `main`, `h1` oculto, `#text aria-live="polite"`, `nav` de salidas; `data-render` según `RENDER`), `src/v2/components/Sala/Sala.module.css` (mínimo: clases referenciadas, sin diseño).
   - Aceptación: en `/v2` y `/en/v2` el HTML contiene las 6 capas, el JSON de ese idioma y ningún texto escrito en el componente (todo viene del guion). Specs v2-estatua R1, R9 (solo transform/opacity), v2-i18n R2, v2-responsive-a11y R5.
-- [ ] 3.3 `<noscript>`
+- [x] 3.3 `<noscript>`
   - Archivos: `Sala.astro` (usa `ui.noscript` + `projects`).
   - Aceptación: con JS desactivado se ve quién es, lista de proyectos, enlace a proyectos, contacto. Spec v2-responsive-a11y R7.
-- [ ] 3.4 Conectar las páginas
+- [x] 3.4 Conectar las páginas
   - Archivos: `src/pages/v2/index.astro`, `src/pages/en/v2/index.astro` (reemplazan el stub por `<Sala lang=... />`).
   - Aceptación: `npm run build` verde; ambas rutas muestran el escenario; v1 sin cambios. Specs v2-aislamiento R1, v2-i18n R3.
 
@@ -82,16 +82,18 @@ Depende de PR 2. Resultado: `/v2` y `/en/v2` renderizan el escenario estático (
 
 Depende de PR 3. Resultado: la experiencia funciona (secuencia, opciones, teclado, resume) con estilo aún básico.
 
-- [ ] 4.1 Estado, resume y cortes secos
+> Nota de PR 2: la sospecha vigente debe **mantenerse visible** en los pasos siguientes (p. ej. en `q2`) hasta que otro paso traiga una nueva o el modo Elegancia la quite; los pasos compartidos no la repiten.
+
+- [x] 4.1 Estado, resume y cortes secos
   - Archivos: `src/v2/components/Sala/sala.client.ts` (lee JSON; `sessionStorage('v2.state')` en try/catch; valida que el id exista, si no empieza de cero; estado válido = sin portada y corte seco; aplica pose/tilt/flip/plaque/postit/light/ui/sospecha/`dataset.mode`).
   - Aceptación: recargar a mitad retoma ese paso; estado con id inexistente cae al inicio; con `sessionStorage` bloqueado no hay error. Specs v2-proyectos R4 (resume, supuesto 1), v2-estatua R2, R4, R7.
-- [ ] 4.2 Secuencia cámara -> líneas -> opciones
+- [x] 4.2 Secuencia cámara -> líneas -> opciones
   - Archivos: `sala.client.ts` (objeto `T` único; cámara efectiva con factor por breakpoint y espera 1600 ms; líneas añadidas al DOM cada 1200 ms con fade 600 ms; opciones esperan; elegir marca `.pick`, aplica `set`, 1200 ms, `enter(resolve(to))`; `blocks`; `hold`; paso final deja las salidas; giro único con squash).
   - Aceptación: el recorrido Q1->Q2->cierre->rama->final funciona en los 4 modos; texto solo sobre Laura (zona propia). Specs v2-experiencia R2, R3, R4, R6, v2-preguntas R1–R4, v2-estatua R3, R6, R8.
-- [ ] 4.3 Teclado y foco
+- [x] 4.3 Teclado y foco
   - Archivos: `sala.client.ts` (teclas 1–4 eligen; Enter/→ salta `hold`; foco al primer botón al aparecer opciones sin robar el foco existente).
   - Aceptación: recorrer la experiencia solo con teclado; foco visible. Spec v2-responsive-a11y R4, R5.
-- [ ] 4.4 Atajo y vuelta desde proyectos
+- [x] 4.4 Atajo y vuelta desde proyectos
   - Archivos: `sala.client.ts` (el atajo conserva el estado en `sessionStorage` antes de navegar), `Proyectos.astro` si hace falta.
   - Aceptación: en medio de la experiencia, atajo -> proyectos -> "← Volver a la sala" retoma el paso; abrir `/v2/proyectos` directo y pulsar volver empieza de cero. Specs v2-proyectos R4, v2-experiencia R5.
 
@@ -101,16 +103,18 @@ Depende de PR 3. Resultado: la experiencia funciona (secuencia, opciones, teclad
 
 Depende de PR 4 (puede ir en paralelo con 4 si se acuerda el contrato de clases/`data-*` de 3.2).
 
-- [ ] 5.1 Escenario y estatua
+> Nota de PR 2: los pasos compartidos del final (`ya-se`, `quien`, `giro`) traen `ui.exit`; en `html[data-mode="elegancia"]` el atajo y la sospecha se ocultan por CSS.
+
+- [x] 5.1 Escenario y estatua
   - Archivos: `src/v2/components/Sala/Sala.module.css` (espacio 1440×900, `#cam` con `transform-origin: 1040px 340px`, translate+scale con transición 1600 ms, suelo partido con parallax, 6 capas con crossfade 800 ms, recorte CSS + multiply + filter + máscara, `.breathe` 6 s, giro 2 s + squash, halo, post-it/placa con corte seco; solo `transform`/`opacity` animados).
   - Aceptación: se ve igual que `design/v2/animatic.html` lado a lado a 1440×900. Specs v2-estatua R1–R9.
-- [ ] 5.2 Imágenes: modo `cutout`
+- [x] 5.2 Imágenes: modo `cutout`
   - Archivos: `Sala.module.css` (bloque `[data-render="cutout"]`: `background-size: contain; background-position: bottom`), `poses.ts` (documentar constante).
   - Aceptación: cambiar `RENDER` a `'cutout'` no requiere tocar el runtime y la estatua sigue visible. Spec v2-estatua R10.
-- [ ] 5.3 Tema hueso y tipografía
+- [x] 5.3 Tema hueso y tipografía
   - Archivos: `tokens.css`/`Sala.module.css` (`html[data-mode="elegancia"]` hueso, tamaños de voz 44/36/28).
   - Aceptación: en modo Elegancia el fondo pasa a hueso; contraste de `--suave` ≥4,5:1 en blanco y hueso (medido). Specs v2-preguntas R2, v2-responsive-a11y R2.
-- [ ] 5.4 Responsive fluido
+- [x] 5.4 Responsive fluido
   - Archivos: `Sala.module.css`, `sala.client.ts` (`matchMedia('(min-width:1024px)')`, `fit()` solo en desktop; en <1024 grid fluido con `scale(k_efectiva)` y origen en la estatua; estatua 100/85/62 %, cámara 115/110/106 %; opciones apiladas con alto ≥44 px en móvil; bloques con scroll interno).
   - Aceptación: revisar a 1440, 768 y 390 px: texto nunca sobre la estatua, sin recorte de texto, objetivos ≥44 px. Specs v2-responsive-a11y R1, R2, R3, v2-experiencia R4.
 
@@ -120,13 +124,13 @@ Depende de PR 4 (puede ir en paralelo con 4 si se acuerda el contrato de clases/
 
 Depende de PR 5.
 
-- [ ] 6.1 Sonido opt-in
+- [x] 6.1 Sonido opt-in
   - Archivos: `src/v2/components/Sala/sound.ts` (`note(hz)` WebAudio perezoso; `TRACK: string | null = null`; preferencia en `sessionStorage('v2.sound')`), portada con Sí/No en `sala.client.ts`/`Sala.astro`.
   - Aceptación: por defecto no suena nada; con "Sí" suenan las notas de las opciones; con "No" nada. Spec v2-responsive-a11y R8.
-- [ ] 6.2 `prefers-reduced-motion`
+- [x] 6.2 `prefers-reduced-motion`
   - Archivos: `sala.client.ts` (`T` = 0 con la media query), `Sala.module.css` (sin respiración, cámara ni squash).
   - Aceptación: con la preferencia activa todo son cortes secos y sigue siendo completable. Spec v2-responsive-a11y R6.
-- [ ] 6.3 `V2_STRICT` y revisión final
+- [x] 6.3 `V2_STRICT` y revisión final
   - Archivos: documentar en el README de `src/v2/` cómo lanzar `V2_STRICT=1 npm run build` (en PowerShell: `$env:V2_STRICT=1; npm run build`; sin dependencia `cross-env`), ajustes menores de a11y.
   - Aceptación: `npm run build` verde con avisos; `V2_STRICT=1` falla con TODOs; `grep -r "\[\[TODO" dist` los lista; pasada manual en 1440/768/390 y con teclado + lector de pantalla básico. Specs v2-aislamiento R3, R4, v2-responsive-a11y R1–R8.
 
