@@ -33,7 +33,7 @@ export interface Step {
   blocks?: Block[];
   top?: number; // y del texto en el escenario (330 por defecto, 220 con bloques)
   dim?: boolean;
-  hold?: number; // ms antes de avanzar solo
+  hold?: number; // pausa mínima (ms) antes de mostrar "continuar"; nunca avanza solo
   options?: Option[]; // si existe, espera respuesta; si no, usa next
   next?: Next; // ausente = paso final
 }
@@ -51,6 +51,7 @@ export interface Script {
   steps: Record<string, Step>;
   ui: {
     soundPrompt: string;
+    continue: string;
     yes: string;
     no: string;
     exit: string;

@@ -257,6 +257,35 @@
   padding-top: 24px;
 }
 
+.text > div:has(> .continue) {
+  display: flex;
+  gap: 24px;
+  padding-top: 16px;
+}
+
+.continue {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font: 500 11px / 1.4 var(--font-sans);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--suave);
+}
+
+.continue:hover {
+  color: var(--tinta);
+}
+
+.continue:focus-visible {
+  outline: 2px solid var(--tinta);
+  outline-offset: 4px;
+}
+
 .option {
   display: flex;
   align-items: center;

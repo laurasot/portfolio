@@ -1,4 +1,4 @@
-import type { Option, Script, Step } from './types';
+import type { Next, Option, Script, Step } from './types';
 import page from './projects.en';
 
 const todo = (what: string) => `[[TODO: ${what}]]`;
@@ -26,6 +26,12 @@ const q2Options: Option[] = [
   { label: 'Recognition', set: { q2: 'reconocimiento' }, note: 587.33, to: 'a-reconocimiento' },
 ];
 
+// Tras Q2 cada modo entra a su primer paso lineal (los menús llegan con los hubs).
+const afterQ2: Next = {
+  by: 'mode',
+  to: { ideas: 'exp-1', resultados: 'num-1', honestidad: 'real-1', elegancia: 'menos-1' },
+};
+
 const list: Step[] = [
   // Scenes 1 and 2
   {
@@ -34,7 +40,7 @@ const list: Step[] = [
     camera: 1,
     ui: { exit: true },
     lines: ['…'],
-    hold: 2000,
+    hold: 800,
     next: 'llegaste',
   },
   {
@@ -43,7 +49,7 @@ const list: Step[] = [
     tilt: -1,
     camera: 1,
     ui: { exit: true },
-    hold: 2200,
+    hold: 800,
     next: 'sobre-mi',
     lines: ['Ah. You made it.'],
   },
@@ -53,7 +59,7 @@ const list: Step[] = [
     camera: 1.15,
     ui: { exit: true },
     dim: true,
-    hold: 2200,
+    hold: 900,
     next: 'flojera',
     lines: ['Laura asked me not to write an "About me" section.', 'So here I am.'],
   },
@@ -64,7 +70,7 @@ const list: Step[] = [
     camera: 1.15,
     ui: { exit: true },
     dim: true,
-    hold: 2400,
+    hold: 900,
     next: 'empiezo',
     lines: [
       'She says a decision explains more than a description.',
@@ -77,7 +83,7 @@ const list: Step[] = [
     camera: 1.15,
     ui: { exit: true },
     dim: true,
-    hold: 1500,
+    hold: 700,
     next: 'q1',
     lines: ['I have about ten things to show you.', 'Where should I start?'],
   },
@@ -102,7 +108,7 @@ const list: Step[] = [
     camera: 1.15,
     ui: { exit: true },
     light: true,
-    hold: 2500,
+    hold: 800,
     next: 'q2',
     lines: ["Good. I'll skip the part where I try to impress you."],
     sospecha: s1('You like understanding how things work.'),
@@ -112,7 +118,7 @@ const list: Step[] = [
     pose: 'base',
     camera: 1.15,
     ui: { exit: true },
-    hold: 2500,
+    hold: 800,
     next: 'q2',
     lines: ["Perfect. I'll show you numbers and get out of your way."],
   },
@@ -121,7 +127,7 @@ const list: Step[] = [
     pose: 'base',
     camera: 1.15,
     ui: { exit: true },
-    hold: 2500,
+    hold: 800,
     next: 'q2',
     lines: ["Ok. I'll tell you things as they are, no frills."],
     sospecha: s1('You prefer the short version, unfiltered.'),
@@ -141,8 +147,8 @@ const list: Step[] = [
     camera: 1.15,
     ui: { exit: true },
     dim: true,
-    hold: 2500,
-    next: 'cierre',
+    hold: 800,
+    next: afterQ2,
     lines: ['Ideas. Perfect.', 'I have plenty.'],
     sospecha: s2('Obvious answers bore you.'),
   },
@@ -151,8 +157,8 @@ const list: Step[] = [
     pose: 'base',
     camera: 1.15,
     ui: { exit: true },
-    hold: 2500,
-    next: 'cierre',
+    hold: 800,
+    next: afterQ2,
     lines: ["Ideas again. At least you're consistent."],
     sospecha: s2('Obvious answers bore you.'),
   },
@@ -162,8 +168,8 @@ const list: Step[] = [
     camera: 1.15,
     ui: { exit: true },
     dim: true,
-    hold: 2500,
-    next: 'cierre',
+    hold: 800,
+    next: afterQ2,
     lines: ['Success. I like it.', 'So does Laura.'],
     sospecha: s2('You like things that get finished.'),
   },
@@ -174,8 +180,8 @@ const list: Step[] = [
     camera: 1.15,
     ui: { exit: true },
     dim: true,
-    hold: 2500,
-    next: 'cierre',
+    hold: 800,
+    next: afterQ2,
     lines: ['Honest answer.', 'Hardly anyone picks that one. Well, hardly anyone admits it.'],
     sospecha: s2("You're not too sold on marketing."),
   },
@@ -186,30 +192,19 @@ const list: Step[] = [
     camera: 1.15,
     ui: { exit: true },
     dim: true,
-    hold: 2500,
-    next: 'cierre',
+    hold: 800,
+    next: afterQ2,
     lines: ['Recognition.', "Don't worry, I won't tell anyone."],
     sospecha: s2('You read the credits at the end of movies.'),
   },
   // Scene 3: one branch per mode
-  {
-    id: 'cierre',
-    pose: 'base',
-    camera: 1.15,
-    ui: { exit: true },
-    hold: 600,
-    next: {
-      by: 'mode',
-      to: { ideas: 'exp-1', resultados: 'num-1', honestidad: 'real-1', elegancia: 'menos-1' },
-    },
-  },
   {
     id: 'exp-1',
     pose: 'pensando',
     camera: 1.15,
     ui: { exit: true },
     top: 220,
-    hold: 3000,
+    hold: 1200,
     next: 'fav',
     lines: ["This one almost didn't work. That's why it's one of my favorites."],
     blocks: [
@@ -229,7 +224,7 @@ const list: Step[] = [
     top: 220,
     dim: true,
     postit: 'favorite ★',
-    hold: 3000,
+    hold: 1200,
     next: 'raras',
     lines: ['I like that one too.', 'The others have more GitHub stars, but still.'],
     blocks: [
@@ -245,7 +240,7 @@ const list: Step[] = [
     ui: { exit: true },
     top: 220,
     dim: true,
-    hold: 3000,
+    hold: 1200,
     next: 'duda',
     lines: ["This didn't turn out as expected.", 'But something came out of it.'],
     blocks: [
@@ -260,7 +255,7 @@ const list: Step[] = [
     ui: { exit: true },
     top: 220,
     postit: 'do not touch, it falls',
-    hold: 3000,
+    hold: 1200,
     next: 'ya-se',
     lines: ['This is where it gets interesting.'],
     blocks: [
@@ -277,7 +272,7 @@ const list: Step[] = [
     camera: 1.15,
     ui: { exit: true },
     top: 220,
-    hold: 3000,
+    hold: 1200,
     next: 'ya-se',
     lines: [todo('opening line for Results')],
     blocks: [
@@ -299,7 +294,7 @@ const list: Step[] = [
     camera: 1.15,
     ui: { exit: true },
     top: 220,
-    hold: 3000,
+    hold: 1200,
     next: 'ya-se',
     lines: [todo('opening line for Honesty')],
     blocks: [
@@ -314,7 +309,7 @@ const list: Step[] = [
     pose: 'base',
     camera: 1.15,
     top: 220,
-    hold: 3000,
+    hold: 1200,
     next: 'menos-2',
     lines: ['Less, then.'],
     blocks: [
@@ -327,7 +322,7 @@ const list: Step[] = [
     id: 'menos-2',
     pose: 'cinta',
     camera: 1.02,
-    hold: 2400,
+    hold: 900,
     next: 'ya-se',
     lines: ['I removed everything that was extra.', 'Not the tape, though. The tape stays.'],
   },
@@ -336,7 +331,7 @@ const list: Step[] = [
     id: 'ya-se',
     pose: 'cinta',
     camera: 1,
-    hold: 2200,
+    hold: 800,
     next: 'quien',
     ui: { exit: true },
     lines: ['I think I know what you came here for.'],
@@ -345,12 +340,11 @@ const list: Step[] = [
     id: 'quien',
     pose: 'cinta',
     camera: 1.02,
-    hold: 2000,
-    next: 'giro',
+    hold: 700,
+    next: 'fin',
     ui: { exit: true },
     lines: ['Want to know who Laura is?'],
   },
-  { id: 'giro', pose: 'giro', camera: 1.04, hold: 2600, next: 'fin', ui: { exit: true } },
   {
     id: 'fin',
     pose: 'giro',
@@ -368,6 +362,7 @@ const script: Script = {
   steps: Object.fromEntries(list.map((s) => [s.id, s])),
   ui: {
     soundPrompt: 'With sound?',
+    continue: 'continue',
     yes: 'Yes',
     no: 'No',
     exit: page.ui.exit,
