@@ -1,5 +1,5 @@
 import type { Block, Option, Script, Step } from '../../data/types';
-import { resolve, type State } from './engine';
+import { createState, resolve, sanitize, type State } from './engine';
 import { note, setSound, soundPref } from './sound';
 
 // Tiempos únicos del runtime (ms), tomados del animatic. Con movimiento reducido, todo a 0:
@@ -28,7 +28,7 @@ const shortcut = $('[data-shortcut]');
 const exits = $('[data-exits]');
 const sosBox = $('[data-sospecha]');
 
-let state: Saved = { step: script.start };
+let state: Saved = createState(script.start);
 let lastK = 1;
 let tasks: { fn: () => void; id: number }[] = [];
 let options: HTMLButtonElement[] = [];
@@ -66,12 +66,13 @@ const stop = () => {
 
 function load(): Saved {
   try {
-    const s = JSON.parse(sessionStorage.getItem(KEY) ?? 'null');
-    if (s && script.steps[s.step]) return s;
+    const raw = JSON.parse(sessionStorage.getItem(KEY) ?? 'null');
+    const s = sanitize(raw, (id) => id in script.steps);
+    if (s) return { ...s, sos: raw.sos ?? null };
   } catch {
     /* sessionStorage bloqueado o JSON roto: empezar de cero */
   }
-  return { step: script.start };
+  return createState(script.start);
 }
 
 // Se guarda en cada paso: el atajo a proyectos ya lleva el estado vigente.
@@ -264,7 +265,7 @@ function go(next: NonNullable<Step['next']>) {
     enter(resolve(next, state));
   } catch {
     // Estado guardado incoherente (p. ej. sin modo): reiniciar.
-    state = { step: script.start };
+    state = createState(script.start);
     enter(script.start, true);
   }
 }
