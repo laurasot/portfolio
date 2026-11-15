@@ -1,0 +1,58 @@
+---
+import type { System } from '../../data/v1';
+import Screen from '../Screen/Screen.astro';
+import Diagram from '../Diagram/Diagram.astro';
+import styles from './Sistema.module.css';
+
+interface Props {
+  system: System;
+  index: number;
+  count: number;
+  total: number;
+  next: { href: string; label: string };
+}
+
+const { system: s, index, count, total, next } = Astro.props;
+const pad = (n: number) => String(n).padStart(2, '0');
+const facts = [
+  ['Problema', s.problem],
+  ['Restricción', s.constraint],
+  ...(s.decision ? [['Decisión', s.decision]] : []),
+  ['Stack', s.stack],
+];
+---
+
+<Screen id={s.id} index={index} total={total} nav="sistemas" next={next}>
+  <p class="label muted">Sistema {pad(index)} / {pad(count)} · {s.tag}</p>
+  {s.status && <p class="label chip">{s.status}</p>}
+  <h2 id={`${s.id}-title`} class="title">{s.title}</h2>
+  <p class="lead">{s.summary}</p>
+  <p class={styles.metric}>
+    <span class={styles.value}>{s.metric[0]}</span>
+    <span class="label muted">{s.metric[1]}</span>
+  </p>
+  <dl class="facts">
+    {
+      facts.map(([k, v]) => (
+        <div>
+          <dt class="label">{k}</dt>
+          <dd>{v}</dd>
+        </div>
+      ))
+    }
+  </dl>
+  {
+    s.links.length > 0 && (
+      <ul class={styles.links}>
+        {s.links.map((l) => (
+          <li>
+            <a class="label" href={l.href} target="_blank" rel="noopener noreferrer">
+              {l.label} ↗
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  <Diagram slot="panel" fig={pad(index)} data={s.diagram} />
+</Screen>

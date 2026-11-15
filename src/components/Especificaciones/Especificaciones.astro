@@ -1,0 +1,68 @@
+---
+import { specs } from '../../data/v1';
+import Screen from '../Screen/Screen.astro';
+import styles from './Especificaciones.module.css';
+
+interface Props {
+  index: number;
+  total: number;
+  next: { href: string; label: string };
+}
+
+const { index, total, next } = Astro.props;
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<Screen id="especificaciones" index={index} total={total} nav="especificaciones" next={next}>
+  <p class="label muted">{pad(index)} · Perfil técnico</p>
+  <h2 id="especificaciones-title" class="title">Especificaciones</h2>
+  <p class="lead muted">{specs.summary}</p>
+  <dl class:list={['facts', styles.facts]}>
+    {
+      specs.facts.map(([k, v]) => (
+        <div>
+          <dt class="label">{k}</dt>
+          <dd>{v}</dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <div slot="panel" class={styles.panel}>
+    <div class={styles.stack}>
+      {
+        specs.stack.map(([group, items]) => (
+          <section aria-label={group}>
+            <h3 class="label muted">{group}</h3>
+            <ul>
+              {items.map(([name, main]) => (
+                <li class:list={[main && styles.main]}>{name}</li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+    <p class={styles.legend}><span aria-hidden="true"></span>stack principal</p>
+
+    <h3 class="label muted">Formación</h3>
+    <ol class={styles.education}>
+      {
+        specs.education.map((e) => (
+          <li>
+            <span class={styles.years}>{e.years}</span>
+            <span class={styles.eduTitle}>{e.title}</span>
+            <span class={styles.institution}>{e.institution}</span>
+            {e.credential ? (
+              <a class="label" href={e.credential} target="_blank" rel="noopener noreferrer">
+                Credly ↗
+              </a>
+            ) : (
+              <span />
+            )}
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</Screen>

@@ -1,20 +1,43 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import HeroBanner from '../components/HeroBanner/HeroBanner.astro';
-import About from '../components/About/About.astro';
-import MarqueeSection from '../components/MarqueeSection/MarqueeSection.astro';
-import Projects from '../components/Projects/Projects.astro';
-import Education from '../components/Education/Education.astro';
-import Contact from '../components/Contact/Contact.astro';
+import Header from '../components/Header/Header.astro';
+import Entrada from '../components/Entrada/Entrada.astro';
+import Sistema from '../components/Sistema/Sistema.astro';
+import ComoTrabajo from '../components/ComoTrabajo/ComoTrabajo.astro';
+import Especificaciones from '../components/Especificaciones/Especificaciones.astro';
+import Otros from '../components/Otros/Otros.astro';
+import Contacto from '../components/Contacto/Contacto.astro';
+import { systems } from '../data/v1';
+
+// Entrada (00) + sistemas + cómo trabajo + especificaciones + otros + contacto.
+const n = systems.length;
+const total = n + 4;
 ---
 
 <BaseLayout>
-    <main>
-        <HeroBanner />
-        <About />
-        <MarqueeSection />
-        <Projects />
-        <Education />
-        <Contact />
-    </main>
+  <Header />
+  <main>
+    <Entrada total={total} />
+    <div id="sistemas">
+      {
+        systems.map((s, i) => (
+          <Sistema
+            system={s}
+            index={i + 1}
+            count={n}
+            total={total}
+            next={
+              systems[i + 1]
+                ? { href: `#${systems[i + 1].id}`, label: systems[i + 1].title }
+                : { href: '#como-trabajo', label: 'Cómo trabajo' }
+            }
+          />
+        ))
+      }
+    </div>
+    <ComoTrabajo index={n + 1} total={total} next={{ href: '#especificaciones', label: 'Especificaciones' }} />
+    <Especificaciones index={n + 2} total={total} next={{ href: '#otros', label: 'Fuera del código' }} />
+    <Otros index={n + 3} total={total} next={{ href: '#contacto', label: 'Contacto' }} />
+    <Contacto index={n + 4} total={total} />
+  </main>
 </BaseLayout>

@@ -1,0 +1,28 @@
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 12px 0 8px;
+}
+
+.value {
+  color: var(--accent);
+  font-size: clamp(48px, 4.2vw, 60px);
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.links {
+  display: flex;
+  gap: 28px;
+}
+
+.links a {
+  display: inline-block;
+  padding: 12px 0;
+  text-decoration: none;
+}
+
+.links a:hover {
+  color: var(--accent);
+}

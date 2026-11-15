@@ -1,35 +1,39 @@
 ---
 interface Props {
-    title?: string;
-    description?: string;
+  title?: string;
+  description?: string;
 }
 
-const { 
-    title = 'Laura Soto',
-    description = 'Laura - Portfolio personal'
+const {
+  title = 'Laura Soto · AI Engineer · Cloud Engineer',
+  description = 'Sistemas de IA en tiempo real y cloud, documentados por sus decisiones: la restricción, la arquitectura y el porqué.',
 } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="icon" type="image/png" href="/ico.png" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content={description} />
-        <meta name="author" content="Laura" />
-        <meta name="theme-color" content="#fdfbf7" />
-        <title>{title}</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
-    </head>
-    <body>
-        <slot />
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/ico.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="author" content="Laura Soto" />
+    <meta name="theme-color" content="#0e0f11" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Jost:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Sin JS, los diagramas se muestran completos; con JS se dibujan al entrar en pantalla. -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
+  <body>
+    <slot />
+  </body>
 </html>
 
 <style is:global>
-    @import '../styles/global.css';
+  @import '../styles/global.css';
 </style>
-

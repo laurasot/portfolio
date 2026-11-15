@@ -1,0 +1,33 @@
+.principles {
+  margin-top: 16px;
+}
+
+.principles li {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+
+.principles :global(.label) {
+  padding-top: 4px;
+  color: var(--dim);
+}
+
+.principles h3 {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.principles p {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.frameworks {
+  font-family: var(--font-mono);
+  font-size: 13px;
+}

@@ -1,0 +1,37 @@
+---
+import { profile, systems } from '../../data/v1';
+import styles from './Entrada.module.css';
+
+interface Props {
+  total: number;
+}
+
+const { total } = Astro.props;
+---
+
+<section id="inicio" class={styles.entrada} data-nav="inicio" aria-labelledby="inicio-title">
+  <div class={styles.deco} aria-hidden="true">
+    <span class={styles.ring} />
+    <span class={styles.ringInner} />
+    <span class={styles.signal} />
+  </div>
+  <div class={styles.content}>
+    <p class="label muted">{profile.role}</p>
+    <h1 id="inicio-title" class={styles.name}>{profile.name}</h1>
+    <p class={styles.statement}>{profile.statement}</p>
+    <ul class={styles.stats}>
+      {
+        profile.stats.map(([value, label]) => (
+          <li>
+            <span class={styles.value}>{value}</span>
+            <span class="label muted">{label}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  <footer class={styles.foot}>
+    <a class="label" href={`#${systems[0].id}`}><span class={styles.arrow}>↓</span> Scroll · {String(systems.length).padStart(2, '0')} sistemas</a>
+    <span class="label" aria-hidden="true">00 / {String(total).padStart(2, '0')}</span>
+  </footer>
+</section>

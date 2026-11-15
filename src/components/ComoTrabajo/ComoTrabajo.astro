@@ -1,0 +1,41 @@
+---
+import { howIWork } from '../../data/v1';
+import Screen from '../Screen/Screen.astro';
+import Diagram from '../Diagram/Diagram.astro';
+import styles from './ComoTrabajo.module.css';
+
+interface Props {
+  index: number;
+  total: number;
+  next: { href: string; label: string };
+}
+
+const { index, total, next } = Astro.props;
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<Screen id="como-trabajo" index={index} total={total} nav="como-trabajo" next={next}>
+  <p class="label muted">{pad(index)} · Cómo trabajo</p>
+  <h2 id="como-trabajo-title" class="title">Cómo trabajo</h2>
+  <p class="lead">{howIWork.intro}</p>
+  <ol class={styles.principles}>
+    {
+      howIWork.principles.map(([title, text], i) => (
+        <li>
+          <span class="label">{pad(i + 1)}</span>
+          <div>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+  <dl class="facts">
+    <div>
+      <dt class="label">Marcos</dt>
+      <dd class={styles.frameworks}>{howIWork.frameworks}</dd>
+    </div>
+  </dl>
+  <Diagram slot="panel" fig={pad(index)} data={howIWork.diagram} />
+</Screen>
