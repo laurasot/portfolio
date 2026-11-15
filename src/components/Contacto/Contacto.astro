@@ -1,0 +1,43 @@
+---
+import { contact, profile } from '../../data/v1';
+import Screen from '../Screen/Screen.astro';
+import styles from './Contacto.module.css';
+
+interface Props {
+  index: number;
+  total: number;
+}
+
+const { index, total } = Astro.props;
+---
+
+<Screen id="contacto" index={index} total={total} nav="contacto">
+  <div class={styles.deco} aria-hidden="true">
+    <span class={styles.ring}></span>
+    <span class={styles.signal}></span>
+  </div>
+  <p class="label muted">{String(index).padStart(2, '0')} · Contacto</p>
+  <h2 id="contacto-title" class={styles.title}>{contact.title}</h2>
+  <p class="lead muted">{contact.lead}</p>
+  <ul class={styles.links}>
+    {
+      contact.links.map((l) => {
+        const external = l.href.startsWith('http');
+        return (
+          <li>
+            <a
+              href={l.href}
+              target={external ? '_blank' : undefined}
+              rel={external ? 'noopener noreferrer' : undefined}
+            >
+              <span class="label">{l.label}</span>
+              <span class={styles.value}>{l.value}</span>
+              <span class={styles.arrow} aria-hidden="true">↗</span>
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+  <p class:list={['label', styles.sign]}>{profile.name} · {profile.role} · © 2026</p>
+</Screen>

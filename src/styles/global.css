@@ -4,158 +4,127 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 html {
   scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  scroll-padding-top: var(--header-h);
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
 }
 
 body {
-  font-family: var(--font-primary);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-regular);
-  line-height: var(--line-height-normal);
-  color: var(--color-text-primary);
-  background-color: var(--color-white-warm);
-  min-height: 100vh;
-  overflow-x: hidden;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1,
 h2,
 h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-display);
-  font-weight: var(--font-weight-light);
-  line-height: var(--line-height-tight);
-  color: var(--color-text-primary);
-}
-
-h1 {
-  font-size: var(--font-size-5xl);
-  letter-spacing: -0.02em;
-}
-
-h2 {
-  font-size: var(--font-size-4xl);
-  letter-spacing: -0.01em;
-}
-
-h3 {
-  font-size: var(--font-size-3xl);
-}
-
-h4 {
-  font-size: var(--font-size-2xl);
-}
-
-p {
-  margin-bottom: var(--spacing-md);
-  color: var(--color-text-secondary);
-}
-
-a {
-  color: var(--color-sky-medium);
-  text-decoration: none;
-  transition: color var(--transition-base);
-}
-
-a:hover {
-  color: var(--color-sky-deep);
-}
-
-a:focus-visible {
-  outline: 2px solid var(--color-lilac-medium);
-  outline-offset: 2px;
-  border-radius: var(--border-radius-sm);
-}
-
-button {
-  font-family: var(--font-primary);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
-  cursor: pointer;
-  border: none;
-  background: none;
-  transition: all var(--transition-base);
-}
-
-button:focus-visible {
-  outline: 2px solid var(--color-lilac-medium);
-  outline-offset: 2px;
-  border-radius: var(--border-radius-sm);
-}
-
-img,
-svg {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
+p,
+ol,
 ul,
-ol {
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+ol,
+ul {
+  padding: 0;
   list-style: none;
 }
 
-@media (max-width: 768px) {
-  h1 {
-    font-size: var(--font-size-4xl);
-  }
-
-  h2 {
-    font-size: var(--font-size-3xl);
-  }
-
-  h3 {
-    font-size: var(--font-size-2xl);
-  }
-
-  p {
-    margin-bottom: var(--spacing-md);
-  }
+a {
+  color: inherit;
 }
 
-@media (max-width: 480px) {
-  h1 {
-    font-size: var(--font-size-3xl);
-  }
-
-  h2 {
-    font-size: var(--font-size-2xl);
-  }
-
-  h3 {
-    font-size: var(--font-size-xl);
-  }
-
-  p {
-    margin-bottom: var(--spacing-sm);
-    font-size: var(--font-size-sm);
-  }
-
-  body {
-    font-size: var(--font-size-sm);
-  }
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
+/* Etiqueta técnica: mono, mayúsculas, espaciada. */
+.label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Tipografía compartida por las pantallas del recorrido. */
+.muted {
+  color: var(--muted);
+}
+
+.title {
+  font-size: clamp(36px, 3.5vw, 50px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+}
+
+.lead {
+  font-size: clamp(17px, 1.4vw, 20px);
+  line-height: 1.5;
+}
+
+.chip {
+  display: inline-block;
+  width: fit-content;
+  padding: 3px 8px;
+  border: 1px solid var(--dim);
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* Filas técnicas: etiqueta a la izquierda, valor a la derecha. */
+.facts > div {
+  display: grid;
+  grid-template-columns: 136px 1fr;
+  gap: 16px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+
+.facts > div:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.facts dt {
+  color: var(--dim);
+}
+
+.facts dd {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+@media (max-width: 1023px) {
+  .facts > div {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}

@@ -1,0 +1,30 @@
+---
+import styles from './Screen.module.css';
+
+interface Props {
+  id: string;
+  index: number;
+  total: number;
+  /** Sección del menú que se marca como activa. */
+  nav: string;
+  next?: { href: string; label: string };
+}
+
+const { id, index, total, nav, next } = Astro.props;
+const pad = (n: number) => String(n).padStart(2, '0');
+const hasPanel = Astro.slots.has('panel');
+---
+
+<section
+  id={id}
+  class:list={[styles.screen, hasPanel && styles.split]}
+  data-nav={nav}
+  aria-labelledby={`${id}-title`}
+>
+  <div class={styles.main}><slot /></div>
+  {hasPanel && <div class={styles.panel}><slot name="panel" /></div>}
+  <footer class={styles.foot}>
+    {next ? <a class="label" href={next.href}>↓ Siguiente · {next.label}</a> : <span />}
+    <span class="label" aria-hidden="true">{pad(index)} / {pad(total)}</span>
+  </footer>
+</section>

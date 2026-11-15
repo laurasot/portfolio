@@ -1,0 +1,101 @@
+.header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 10;
+  height: var(--header-h);
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--max);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.brand {
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.desktop ul {
+  display: flex;
+  gap: 32px;
+}
+
+.header a[data-link] {
+  position: relative;
+  display: block;
+  padding: 10px 0;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.header a[data-link]:hover,
+.header a[aria-current] {
+  color: var(--text);
+}
+
+.desktop a[aria-current]::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 2px;
+  height: 2px;
+  background: var(--accent);
+}
+
+.menu {
+  display: none;
+}
+
+.menu summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  color: var(--muted);
+  cursor: pointer;
+  list-style: none;
+}
+
+.menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.burger {
+  width: 18px;
+  height: 12px;
+  border-block: 2px solid var(--text);
+  background: linear-gradient(var(--text), var(--text)) center / 100% 2px no-repeat;
+}
+
+.menu nav {
+  position: absolute;
+  inset: var(--header-h) 0 auto;
+  padding: 0 var(--gutter) 8px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.menu li a {
+  min-height: 48px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 1023px) {
+  .desktop {
+    display: none;
+  }
+
+  .menu {
+    display: block;
+  }
+}

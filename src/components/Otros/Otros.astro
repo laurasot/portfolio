@@ -1,0 +1,25 @@
+---
+import { music } from '../../data/v1';
+import Screen from '../Screen/Screen.astro';
+import styles from './Otros.module.css';
+
+interface Props {
+  index: number;
+  total: number;
+  next: { href: string; label: string };
+}
+
+const { index, total, next } = Astro.props;
+---
+
+<Screen id="otros" index={index} total={total} nav="otros" next={next}>
+  <p class="label muted">{String(index).padStart(2, '0')} · Fuera del código</p>
+  <div class={styles.body}>
+    <h2 id="otros-title" class={styles.title}>{music.title}</h2>
+    <p class="lead muted">{music.text}</p>
+    <ul class={styles.tags}>
+      {music.tags.map((t) => <li class="label">{t}</li>)}
+    </ul>
+  </div>
+  <div slot="panel" class={styles.deco} aria-hidden="true"><span></span><span></span></div>
+</Screen>

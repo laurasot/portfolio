@@ -1,0 +1,153 @@
+.entrada {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  max-width: var(--max);
+  min-height: 100svh;
+  margin: 0 auto;
+  padding: calc(var(--header-h) + 40px) var(--gutter) 40px;
+  overflow: hidden;
+}
+
+.deco {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ring,
+.ringInner {
+  position: absolute;
+  border: 1.5px solid var(--line);
+  border-radius: 50%;
+  aspect-ratio: 1;
+}
+
+.ring {
+  top: calc(var(--header-h) + 32px);
+  right: -200px;
+  width: min(820px, 90vw);
+}
+
+.ringInner {
+  top: calc(var(--header-h) + 182px);
+  right: -50px;
+  width: min(520px, 58vw);
+  border-width: 1px;
+}
+
+.signal {
+  position: absolute;
+  top: calc(var(--header-h) + 25px);
+  right: calc(min(820px, 90vw) / 2 - 200px - 7px);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+}
+
+.name {
+  font-size: clamp(64px, 9.2vw, 132px);
+  font-weight: 700;
+  line-height: 0.97;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.statement {
+  max-width: 640px;
+  color: var(--muted);
+  font-size: clamp(17px, 1.6vw, 22px);
+  line-height: 1.45;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 280px));
+  gap: 40px;
+  margin-top: 48px;
+}
+
+.stats li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.stats li::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 36px;
+  height: 3px;
+  background: var(--accent);
+}
+
+.value {
+  font-size: clamp(32px, 3.4vw, 48px);
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.foot {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 24px;
+  color: var(--dim);
+}
+
+.foot a {
+  min-height: 44px;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.arrow {
+  color: var(--accent);
+}
+
+@media (max-width: 1023px) {
+  .stats {
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 16px;
+  }
+
+  .stats li {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 0;
+  }
+
+  .stats li::before {
+    display: none;
+  }
+
+  .value {
+    min-width: 90px;
+  }
+
+  .ring {
+    right: -240px;
+    width: 460px;
+  }
+
+  .ringInner,
+  .signal {
+    display: none;
+  }
+}

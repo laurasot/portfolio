@@ -1,0 +1,42 @@
+---
+import { nav, profile } from '../../data/v1';
+import styles from './Header.module.css';
+---
+
+<header class={styles.header}>
+  <div class={styles.inner}>
+    <a class={styles.brand} href="#inicio">{profile.name}</a>
+    <nav class={styles.desktop} aria-label="Secciones">
+      <ul>
+        {nav.map((n) => <li><a class="label" href={`#${n.id}`} data-link={n.id}>{n.label}</a></li>)}
+      </ul>
+    </nav>
+    <details class={styles.menu}>
+      <summary class="label">Menú <span class={styles.burger} aria-hidden="true" /></summary>
+      <nav aria-label="Secciones">
+        <ul>
+          {nav.map((n) => <li><a class="label" href={`#${n.id}`} data-link={n.id}>{n.label}</a></li>)}
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<script>
+  const links = document.querySelectorAll<HTMLAnchorElement>('[data-link]');
+  const mark = (id: string) =>
+    links.forEach((l) =>
+      l.dataset.link === id ? l.setAttribute('aria-current', 'true') : l.removeAttribute('aria-current'),
+    );
+  // Marca la sección que ocupa el centro de la pantalla.
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) if (e.isIntersecting) mark((e.target as HTMLElement).dataset.nav ?? '');
+    },
+    { rootMargin: '-45% 0px -50% 0px' },
+  );
+  document.querySelectorAll('[data-nav]').forEach((s) => io.observe(s));
+  document
+    .querySelectorAll('details nav a')
+    .forEach((a) => a.addEventListener('click', () => a.closest('details')?.removeAttribute('open')));
+</script>

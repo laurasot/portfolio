@@ -1,0 +1,69 @@
+---
+import type { DiagramData } from '../../data/v1';
+import styles from './Diagram.module.css';
+
+interface Props {
+  fig: string;
+  data: DiagramData;
+}
+
+const { fig, data } = Astro.props;
+const last = data.levels.length - 1;
+// Cómo se conecta un nivel con el siguiente según cuántos nodos tiene cada uno.
+const kind = (a: number, b: number) =>
+  a === b ? (a === 1 ? 'single' : 'parallel') : a < b ? 'split' : 'merge';
+---
+
+<figure class={styles.panel} data-diagram>
+  <figcaption class="label">Fig. {fig} — {data.caption}</figcaption>
+  <ol class={styles.flow}>
+    {
+      data.levels.map((level, i) => (
+        <li class={styles.step} style={`--i:${i}`}>
+          {i > 0 && (
+            <div class={styles.edge} data-kind={kind(data.levels[i - 1].length, level.length)}>
+              <span class={styles.seg} data-s="a" />
+              <span class={styles.seg} data-s="b" />
+              <span class={styles.seg} data-s="c" />
+              <span class={styles.seg} data-s="d" />
+              {data.edges[i - 1] && <span class={styles.edgeLabel}>{data.edges[i - 1]}</span>}
+            </div>
+          )}
+          <div class={styles.level} data-count={level.length}>
+            {level.map(([title, detail]) => (
+              <div class:list={[styles.node, (i === 0 || i === last) && styles.end]}>
+                <span class={styles.nodeTitle}>{title}</span>
+                <span class={styles.nodeDetail}>{detail}</span>
+              </div>
+            ))}
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+  {
+    data.rail && (
+      <p class={styles.rail}>
+        <span class="label">Presupuesto</span>
+        <span class={styles.railBar} aria-hidden="true" />
+        <span class:list={['label', styles.railEnd]}>0 s → {data.rail}</span>
+      </p>
+    )
+  }
+  {data.loop && <p class:list={['label', styles.loop]}>↺ {data.loop}</p>}
+</figure>
+
+<script>
+  // Dibuja cada diagrama la primera vez que entra en pantalla.
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        (e.target as HTMLElement).dataset.drawn = '';
+        io.unobserve(e.target);
+      }
+    },
+    { threshold: 0.3 },
+  );
+  document.querySelectorAll('[data-diagram]').forEach((d) => io.observe(d));
+</script>
