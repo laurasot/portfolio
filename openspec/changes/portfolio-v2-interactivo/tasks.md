@@ -38,22 +38,22 @@ Depende de: nada. Cierra W1. Resultado: ningún paso avanza solo; el guion sigue
 
 Depende de: nada (paralelo a 1). El validador debe pasar con el guion del slice 1. Sin cambios de guion ni de UI.
 
-- [ ] 2.1 Tipos del hub
+- [x] 2.1 Tipos del hub
   - Archivos: `src/v2/data/types.ts` (`HubOption { id, label, to, note? }`, `Hub { options, done, doneLabel }`, `Step.hub`, `Step.menu`, `ui.menu`, `ui.seen`).
   - Aceptación: TS strict sin errores. v2-preguntas R7, R8, R9. Los campos nuevos son opcionales o aún sin uso en el guion: en/es siguen compilando.
-- [ ] 2.2 Estado y motor
+- [x] 2.2 Estado y motor
   - Archivos: `src/v2/components/Sala/engine.ts` (`State.seen: string[]`; `createState` -> `seen: []`; `allSeen`, `markSeen` idempotente, `redirect`, `sanitize(raw, has)`; `selfCheck` ampliado: `allSeen` true/false, `markSeen` idempotente, `redirect` con hub completo/incompleto, `sanitize` con estado viejo sin `seen`, `step` inexistente, basura y `mode` inválido).
   - Aceptación: v2-preguntas R10 (todo visto -> `done`), R11 (sin `seen` = vacío; claves desconocidas ignoradas; determinismo). `selfCheck` corre en build y falla si se rompe una regla (probar rompiendo una a propósito y revertir).
-- [ ] 2.3 Validación de grafo con ciclos
+- [x] 2.3 Validación de grafo con ciclos
   - Archivos: `src/v2/data/validate.ts` (aristas `next`, `options[].to`, `hub.options[].to`, `hub.done`; BFS estática se conserva; alcanzabilidad concreta por las 16 combinaciones `(mode, q2)`; terminación: todo paso visitado alcanza `fin`, único terminal permitido).
   - Aceptación: v2-preguntas R6/R10. Un paso inalcanzable en una combinación o un terminal distinto de `fin` rompe el build.
-- [ ] 2.4 Reglas de hub bien formado y retorno
+- [x] 2.4 Reglas de hub bien formado y retorno
   - Archivos: `validate.ts` (`options` no vacío; `done` existe y no es hub; sin `options`/`next`/`blocks` en el mismo paso; ids de `HubOption` únicos en todo el guion; cada `to` existe; desde cada `to` se alcanza el id del hub; todo `menu` referencia un paso con `hub`).
   - Aceptación: v2-preguntas R7/R9/R10. Sin hubs en el guion actual, las reglas pasan vacías; probar con un hub de prueba temporal mal formado (revertir).
-- [ ] 2.5 Paridad estructural W7
+- [x] 2.5 Paridad estructural W7
   - Archivos: `validate.ts` (`shape(step)` = pose, tilt, flip, camera, light, dim, top, ui, hold, next, options `{to,set,note}`, hub `{done, options:[{id,to,note}]}`, menu, nLines, nBlocks, hasPostit, hasPlaque, hasSospecha; comparar con `JSON.stringify` e informar id + campo; además `projects` mismo largo, mismas `url`, `stack.length`; `ui.exits` mismo largo).
   - Aceptación: v2-i18n R2, escenarios "paridad estructural" y "divergencia detectada" (cambiar un `next` o `pose` en `en.ts` hace fallar el build con id y campo; revertir). Cierra W7.
-- [ ] 2.6 Verificación del slice
+- [x] 2.6 Verificación del slice
   - `npm run build` verde con el guion de slice 1 (y también sin él: si 1 no está fusionado, con el guion actual). Si W7 destapa divergencias reales preexistentes es/en, corregirlas en este mismo PR (anotar cuántas).
 
 ---

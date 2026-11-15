@@ -12,6 +12,20 @@ export interface Option {
   note?: number; // Hz de la nota (solo si hay sonido)
 }
 
+export interface HubOption {
+  id: string; // único en todo el guion (con prefijo: 'ideas:exp'); es la clave de `seen`
+  label: string;
+  to: string;
+  note?: number;
+}
+
+/** Paso menú: elige una rama, vuelve, se acumulan vistos; con todo visto salta a `done`. */
+export interface Hub {
+  options: HubOption[];
+  done: string; // paso al terminar (no puede ser otro hub)
+  doneLabel: string;
+}
+
 export interface Block {
   eyebrow: string;
   title: string;
@@ -35,6 +49,8 @@ export interface Step {
   dim?: boolean;
   hold?: number; // pausa mínima (ms) antes de mostrar "continuar"; nunca avanza solo
   options?: Option[]; // si existe, espera respuesta; si no, usa next
+  hub?: Hub; // excluye options, next y blocks
+  menu?: string; // id del hub al que vuelve "volver al menú" (pasos de rama)
   next?: Next; // ausente = paso final
 }
 
@@ -52,6 +68,8 @@ export interface Script {
   ui: {
     soundPrompt: string;
     continue: string;
+    menu?: string; // obligatorio cuando existan hubs (slice 3)
+    seen?: string;
     yes: string;
     no: string;
     exit: string;
