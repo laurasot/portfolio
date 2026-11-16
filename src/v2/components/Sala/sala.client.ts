@@ -30,16 +30,38 @@ const sosBox = $('[data-sospecha]');
 
 let state: Saved = { step: script.start };
 let lastK = 1;
-let timers: number[] = [];
+let tasks: { fn: () => void; id: number }[] = [];
 let options: HTMLButtonElement[] = [];
-let advance: (() => void) | null = null; // salta el `hold` del paso actual
+let advance: (() => void) | null = null;
+// reveal: aparecen líneas/bloques; ready: ya hay botón "continuar". Un gesto completa o avanza.
+let phase: '' | 'reveal' | 'ready' = '';
+let enteredAt = 0;
 
-const later = (fn: () => void, ms: number) => timers.push(window.setTimeout(fn, ms));
+const later = (fn: () => void, ms: number) => {
+  const task = {
+    fn,
+    id: window.setTimeout(() => {
+      tasks = tasks.filter((t) => t !== task);
+      fn();
+    }, ms),
+  };
+  tasks.push(task);
+};
+// Ejecuta ya lo pendiente (muestra todo y el botón); también salta `hold`.
+const flush = () => {
+  const q = tasks;
+  tasks = [];
+  q.forEach((t) => {
+    clearTimeout(t.id);
+    t.fn();
+  });
+};
 const stop = () => {
-  timers.forEach(clearTimeout);
-  timers = [];
+  tasks.forEach((t) => clearTimeout(t.id));
+  tasks = [];
   options = [];
   advance = null;
+  phase = '';
 };
 
 function load(): Saved {
@@ -66,6 +88,7 @@ function save() {
 const wide = matchMedia('(min-width:1024px)');
 const tablet = matchMedia('(min-width:768px)');
 const stage = $('[data-stage]');
+const gate = $('[data-gate]');
 
 function fit() {
   const s = wide.matches ? Math.min(innerWidth / 1440, innerHeight / 900) : '';
@@ -123,19 +146,21 @@ function enter(id: string, instant = false) {
   const step = script.steps[id];
   const t = (ms: number) => (instant ? 0 : ms);
   state.step = id;
+  enteredAt = performance.now();
   if (step.sospecha) state.sos = step.sospecha;
   if (state.mode === 'elegancia') state.sos = null;
   document.documentElement.dataset.mode = state.mode ?? '';
   save();
 
   // Cámara primero; el texto espera a que termine.
-  const wait = step.camera !== lastK ? t(T.cam) : 0;
+  let wait = step.camera !== lastK ? t(T.cam) : 0;
   setCamera(step.camera, instant);
   lastK = step.camera;
 
   // Estatua: crossfade, inclinación/espejo y giro único (squash).
   const turning =
     step.pose === 'giro' && !layers.some((l) => l.dataset.pose === 'giro' && l.dataset.on);
+  if (turning) wait = Math.max(wait, t(T.turn)); // las líneas esperan a que termine el giro
   const tf = `rotate(${step.tilt ?? 0}deg)${step.flip ? ' scaleX(-1)' : ''}`;
   for (const l of layers) {
     const on = l.dataset.pose === step.pose;
@@ -205,9 +230,33 @@ function enter(id: string, instant = false) {
   }
   if (step.next) {
     const next = step.next;
-    advance = () => go(next);
-    later(() => go(next), at + t(step.hold ?? 0));
+    const ctl = document.createElement('div');
+    ctl.setAttribute('aria-live', 'polite');
+    const btn = tpl('t-continue') as HTMLButtonElement;
+    btn.textContent = script.ui.continue;
+    btn.onclick = () => go(next);
+    ctl.append(btn);
+    box.append(ctl);
+    phase = 'reveal';
+    // `hold` es pausa mínima y no se omite ni al retomar (solo cámara y pose son instantáneas).
+    later(
+      () => {
+        phase = 'ready';
+        advance = () => go(next);
+        ctl.dataset.in = '';
+        const a = document.activeElement;
+        if (!a || a === document.body || box.contains(a)) btn.focus();
+      },
+      at + (step.hold ?? 0),
+    );
   }
+}
+
+// Un gesto completa el paso; el siguiente avanza. Se ignoran los toques dobles accidentales.
+function gesture() {
+  if (performance.now() - enteredAt < 250) return;
+  if (phase === 'reveal') flush();
+  else if (phase === 'ready') advance?.();
 }
 
 function go(next: NonNullable<Step['next']>) {
@@ -224,8 +273,13 @@ document.addEventListener('keydown', (e) => {
   if (e.metaKey || e.ctrlKey || e.altKey) return;
   const i = Number(e.key) - 1;
   if (options[i]) options[i].click();
-  else if (advance && (e.key === 'ArrowRight' || (e.key === 'Enter' && e.target === document.body)))
-    advance();
+  else if (e.key === 'ArrowRight' || (e.key === 'Enter' && e.target === document.body)) gesture();
+});
+
+stage.addEventListener('click', (e) => {
+  if ((e.target as Element).closest('a, button, [data-gate]') || !gate.hidden) return;
+  if (getSelection()?.toString()) return;
+  gesture();
 });
 
 addEventListener('resize', () => {
@@ -237,7 +291,6 @@ state = load();
 const resumed = state.step !== script.start;
 
 // Portada de sonido solo en una visita nueva y sin preferencia; una sesión retomada la salta.
-const gate = $('[data-gate]');
 if (!resumed && soundPref() === null) {
   gate.hidden = false;
   gate.querySelector('button')!.focus();
